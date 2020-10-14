@@ -2,22 +2,20 @@
   "name": "fgtracker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/klu13/fgtracker.git"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\""
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/klu13/fgtracker/issues"
-  },
-  "homepage": "https://github.com/klu13/fgtracker#readme",
   "dependencies": {
-    "bulma": "^0.9.1",
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.5"
   }
 }
