@@ -9,7 +9,7 @@ class App extends Component {
   };
   
   componentDidMount() {
-    axios.get('/api/v1/say-something').then((res) => {
+    axios.get('/api/apiTest').then((res) => {
       const response = res.data;
       this.setState({response});
     });
@@ -21,7 +21,7 @@ class App extends Component {
       <header className="App-header">
         <HomepageImage />
         <p>
-          Hello from the frontend!
+          Fall Guys Stat Tracker
           <br/>
           {this.state.response.body}
         </p>

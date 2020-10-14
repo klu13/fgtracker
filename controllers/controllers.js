@@ -1,7 +1,7 @@
-const saySomething = (req, res, next) => {
+const apiTest = (req, res, next) => {
     res.status(200).json({
-        body: 'Hello from the server!'
+        body: 'This is a Server API Test'
     });
 };
 
-module.exports.saySomething = saySomething;
+module.exports.apiTest = apiTest;
