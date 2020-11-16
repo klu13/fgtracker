@@ -1,64 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="favicon.ico" />
-        <title>Fall Guys Tracker</title>
 
-        <!-- Include links to CSS stylesheets below -->
-        <!-- TODO (optional): Add link to bulma here -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    </head>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="../favicon.ico" />
+	<title>Fall Guys Tracker</title>
 
-    <body>
-        <section class="section">
-            <div class="container">
-                <div class="content">
-                    <h1 class="title has-text-weight-bold" style="margin-bottom: 30px;">Fall Guys Stat Tracker</h1>      
-                    <div id="root">
-                        <div id="game-stats-container">
-                            <h5>Input Game Stats</h5>
-                            <div class="dropdown">
-                                <div class="dropdown-trigger">
-                                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
-                                    <span>Select number of rounds</span>
-                                    <span class="icon is-small">
-                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                    </span>
-                                    </button>
-                                </div>
-                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                    <div class="dropdown-content">
-                                      <a href="#" class="dropdown-item">
-                                        Dropdown item
-                                      </a>
-                                      <a class="dropdown-item">
-                                        Other dropdown item
-                                      </a>
-                                      <a href="#" class="dropdown-item is-active">
-                                        Active dropdown item
-                                      </a>
-                                      <a href="#" class="dropdown-item">
-                                        Other dropdown item
-                                      </a>
-                                      <hr class="dropdown-divider">
-                                      <a href="#" class="dropdown-item">
-                                        With a divider
-                                      </a>
-                                    </div>
-                                  </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+	<!-- Include links to CSS stylesheets below -->
+	<!-- TODO (optional): Add link to bulma here -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+</head>
 
-        <!-- Include links to JavaScript files below -->
-        <!-- TODO: Add link to jQuery here -->
-        <script src="../node_modules/jquery/dist/jquery.js"></script>
-        <!-- <script src="./node_modules/axios/dist/axios.js"></script> -->
-        <script src="script.js" type="module"></script>
-    </body>
+<body>
+	<section class="section">
+		<div class="container">
+			<div class="content">
+				<h1 class="title has-text-weight-bold" style="margin-bottom: 30px;">Fall Guys Stat Tracker</h1>
+				<div id="root">
+					<div id="game-stats-container">
+						<h5>Input Game Stats</h5>
+						<div class="dropdown">
+							<div class="dropdown-trigger">
+								<button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+									<span>Select number of rounds</span>
+									<svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
+										<path fill="currentColor"
+											d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+									</svg>
+								</button>
+							</div>
+							<div class="dropdown-menu" id="dropdown-menu" role="menu">
+								<div class="dropdown-content">
+									<a href="#" class="dropdown-item">
+										Dropdown item
+									</a>
+									<a class="dropdown-item">
+										Other dropdown item
+									</a>
+									<a href="#" class="dropdown-item is-active">
+										Active dropdown item
+									</a>
+									<a href="#" class="dropdown-item">
+										Other dropdown item
+									</a>
+									<hr class="dropdown-divider">
+									<a href="#" class="dropdown-item">
+										With a divider
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Include links to JavaScript files below -->
+	<!-- TODO: Add link to jQuery here -->
+	<script src="../node_modules/jquery/dist/jquery.js"></script>
+	<!-- <script src="./node_modules/axios/dist/axios.js"></script> -->
+	<script src="script.js" type="module"></script>
+</body>
+
 </html>
