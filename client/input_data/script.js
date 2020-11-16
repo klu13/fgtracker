@@ -1,13 +1,13 @@
 
 
-export const loadIntoDOM = function() {
-    const $root = $("#root");
-
-    
-}
+// export const loadIntoDOM = function() {
+//     const $root = $("#root");
 
 
+// }
 
-$(function () {
-    loadIntoDOM();
-})
+
+
+// $(function () {
+//     loadIntoDOM();
+// })
