@@ -197,6 +197,35 @@ export const handleCrownClick = (event) => {
     }
 }
 
+export const renderErrorMessage = function(message) {
+    return `<div id="error-message" style="background-color: #e75480; margin-bottom: 30px; padding: 15px">
+                <p>${message}</p>
+            </div>`
+}
+
+export const handleSuccessMessage = function(message) {
+    let html = `<div id="error-message" style="background-color: #5dbb63; margin-bottom: 30px; padding: 15px">
+                <p>${message}</p>
+            </div>`;
+
+    $("#error-message").replaceWith(html);
+    $(".column").remove();
+    $("#submit-button").remove();
+    $("#dropdown-number").remove();
+    $("#crown-dropdown").remove();
+    let newButtons = `<a class="button" style="background-color: #e75480;" href="./index.html">
+                        <p style="font-family: Titan One;">Add Another Game</p>
+                      </a>`;
+
+    newButtons += `<a class="button" style="background-color: #e75480;">
+                        <p style="font-family: Titan One;">View Your Stats</p>
+                    </a>`
+
+
+    $("#game-stats-container").append(newButtons);
+}
+
+
 export const handleSubmitClick = function(event) {
     const stageList = ['Big Fans', 'Block Party', 'Dizzy Heights', 'Door Dash', 'Egg Scramble', 'Egg Siege', 
         'Fall Ball', 'Fall Mountain', 'Fruit Chute', 'Gate Crash', 'Hex A Gone', 'Hit Parade', 'Hoarders', 
@@ -214,14 +243,10 @@ export const handleSubmitClick = function(event) {
     //validate stages
     for (let i = 1; i < 9; i++) {
         if (document.getElementById(`select-stage-${i}`) == null) {
-            if (i == 1) {
-                alert("make sure you make your selections");
-                validStages = false;
-            }
             break;
         } else if (!stageList.includes($(`#select-stage-${i}`).val())) {
-            alert("make sure stages are valid");
             validStages = false;
+            $("#error-message").replaceWith(renderErrorMessage("ERROR: Make sure all stage names are valid!"));
             break;
         } else {
             stageSelections.push($(`#select-stage-${i}`).val());
@@ -235,7 +260,7 @@ export const handleSubmitClick = function(event) {
                 break;
             }
             else if ($(`#medal-placeholder-${i}`).attr("data-name") == "No selection") {
-                alert("make sure you select all medals");
+                $("#error-message").replaceWith(renderErrorMessage("ERROR: Make sure you select all medals!"));
                 validMedals = false;
                 break;
             } 
@@ -252,7 +277,7 @@ export const handleSubmitClick = function(event) {
     if (validStages && validMedals) {
         if ($(`#win-crown`).attr("data-name") == "Crown?") {
             validCrown = false;
-            alert("make sure you indicate whether you got a crown or not");
+            $("#error-message").replaceWith(renderErrorMessage("ERROR: Make sure you indicate whether you got a crown or not!"));
         } else {
             crownSelection = $(`#win-crown`).attr("data-name");
             if (crownSelection == "Yes") {
@@ -268,7 +293,7 @@ export const handleSubmitClick = function(event) {
         obj.medalsEarned = medalSelections;
         obj.win = crownSelection;
 
-        alert("Success! Here's your json object: \n" + JSON.stringify(obj));
+        handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj));
     }
 }
 
