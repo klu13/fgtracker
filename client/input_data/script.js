@@ -115,30 +115,30 @@ export const handleDropdownClick = (event) => {
         `}
         ${i != rounds - 1 ? `<div class="dropdown" id="dropdown-medal-${i + 1}">
         <div class="dropdown-trigger">
-            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" style="z-index:1">
-                <span>Select medal</span>
-                <svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                </svg>
-            </button>
-        </div>
-        <div class="dropdown-menu" id="dropdown-menu" role="menu" >
-            <div class="dropdown-content" style="width: 158px">
-                <div class="dropdown-item">
-                    <button class="button is-white">None</button>
-                </div>
-                <div class="dropdown-item">
-                    <button class="button is-white">Bronze</button>
-                </div>
-                <div class="dropdown-item">
-                    <button class="button is-white">Silver</button>
-                </div>
-                <div class="dropdown-item">
-                    <button class="button is-white">Gold</button>
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" style="z-index:1">
+                    <span id="medal-placeholder-${i+1}">Select medal</span>
+                    <svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu" >
+                <div class="dropdown-content" style="width: 158px">
+                    <div class="dropdown-item">
+                        <button class="button is-white" id="medal-1" data-card="${i + 1}" data-name="None">None</button>
+                    </div>
+                    <div class="dropdown-item">
+                        <button class="button is-white" id="medal-2" data-card="${i + 1}" data-name="Bronze">Bronze</button>
+                    </div>
+                    <div class="dropdown-item">
+                        <button class="button is-white" id="medal-3" data-card="${i + 1}" data-name="Silver">Silver</button>
+                    </div>
+                    <div class="dropdown-item">
+                        <button class="button is-white" id="medal-4" data-card="${i + 1}" data-name="Gold">Gold</button>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>` : ``}
         </div>
         </div>
@@ -179,6 +179,12 @@ export const handleDropdownClick = (event) => {
     }
 }
 
+export const handleInputCardDropdownClick = function (event) {
+    let cardNumber = event.target.getAttribute("data-card");
+    let medalName = event.target.getAttribute("data-name");
+    $(`#medal-placeholder-${cardNumber}`).replaceWith(`<span id="medal-placeholder-${cardNumber}">${medalName}</span>`)
+}
+
 export const handleCrownClick = (event) => {
     let win = event.data
     if (win) {
@@ -188,28 +194,32 @@ export const handleCrownClick = (event) => {
     }
 }
 
-export const loadIntoDOM = function() {
+export const loadIntoDOM = function () {
     const $root = $("#root");
-    $(document).on('click', '#dropdown-number', function(event) {
+    $(document).on('click', '#dropdown-number', function (event) {
         event.stopPropagation()
         $('#dropdown-number').toggleClass('is-active')
-    }) 
-    $(document).on('click', '#crown-dropdown', function(event) {
+    })
+    $(document).on('click', '#crown-dropdown', function (event) {
         event.stopPropagation()
         $('#crown-dropdown').toggleClass('is-active')
     })
     $(document).on('click', '#crown-yes', true, handleCrownClick)
     $(document).on('click', '#crown-no', false, handleCrownClick)
     for (let i = 1; i < 9; i++) {
-        $(document).on('click', '#dropdown-'+i, i, handleDropdownClick)
-        $(document).on('click', `#dropdown-stage-${i}`, function(event) {
+        $(document).on('click', '#dropdown-' + i, i, handleDropdownClick)
+        $(document).on('click', `#dropdown-stage-${i}`, function (event) {
             event.stopPropagation()
             $(`#dropdown-stage-${i}`).toggleClass('is-active')
         });
-        $(document).on('click', `#dropdown-medal-${i}`, function(event) {
+        $(document).on('click', `#dropdown-medal-${i}`, function (event) {
             event.stopPropagation()
             $(`#dropdown-medal-${i}`).toggleClass('is-active')
-        })  
+        })
+    }
+
+    for (let i = 1; i < 5; i++) {
+        $(document).on('click', '#medal-' + i, i, handleInputCardDropdownClick);
     }
 }
 
