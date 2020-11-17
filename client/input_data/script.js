@@ -115,8 +115,8 @@ export const handleDropdownClick = (event) => {
                     </svg>
                 </button>
             </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
+            <div class="dropdown-menu" id="dropdown-menu" role="menu" >
+                <div class="dropdown-content" style="width: 158px">
                     <div class="dropdown-item">
                         <button class="button is-white">None</button>
                     </div>
