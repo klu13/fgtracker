@@ -111,7 +111,7 @@ export const handleDropdownClick = (event) => {
             </div>
         </div>*/`
         <div style="padding: 15px;margin-top:20px;margin-bottom: 20px">
-        <input class='input' id='select-stage-${i}' type='text' placeholder="Enter stage..."></div>
+        <input class='input' id='select-stage-${i+1}' type='text' placeholder="Enter stage..."></div>
         `}
         ${i != rounds - 1 ? `<div class="dropdown" id="dropdown-medal-${i + 1}">
         <div class="dropdown-trigger">
@@ -153,7 +153,7 @@ export const handleDropdownClick = (event) => {
         $(`#picked-num-rounds`).replaceWith(`<span id='picked-num-rounds'>${rounds} Rounds</span>`)
     }
     for (let i = 0; i < rounds; i++) {
-        let input = document.getElementById(`select-stage-${i}`)
+        let input = document.getElementById(`select-stage-${i+1}`)
         autocomplete({
             input: input,
             fetch: function(text, update) {
