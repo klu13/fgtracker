@@ -9,7 +9,7 @@ body {
     font-family: 'DM Sans';
 }
 
-.container {
+/* .container {
     background: #e6bbad;
     width: 400px;
     height: 300px;
@@ -21,9 +21,14 @@ body {
     margin: auto;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
+} */
+
+.dropdown-content {
+    max-height: 13em;
+    overflow: auto;
 }
 
-.tabs {
+/* .tabs {
     background: #e75480;
     height: 40px;
     margin: 0;
@@ -83,4 +88,4 @@ form input[type=password] {
     border: none;
     color: black;
     outline: none;
-}
+} */
