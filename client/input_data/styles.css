@@ -24,7 +24,7 @@ body {
 } */
 
 .dropdown-content {
-    max-height: 13em;
+    max-height: 14em;
     overflow: auto;
 }
 
