@@ -255,6 +255,9 @@ export const handleSubmitClick = function(event) {
             alert("make sure you indicate whether you got a crown or not");
         } else {
             crownSelection = $(`#win-crown`).attr("data-name");
+            if (crownSelection == "Yes") {
+                medalSelections.push("Gold");
+            }
         }
     }
     
@@ -265,7 +268,7 @@ export const handleSubmitClick = function(event) {
         obj.medalsEarned = medalSelections;
         obj.win = crownSelection;
 
-        alert(`Rounds: ${obj.numRounds}\n Stages: ${obj.stagesPlayed} \n Medals: ${obj.medalsEarned} \n Crown: ${obj.win}`);
+        alert("Success! Here's your json object: \n" + JSON.stringify(obj));
     }
 }
 
