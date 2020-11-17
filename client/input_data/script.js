@@ -213,7 +213,7 @@ export const handleSuccessMessage = function(message) {
     $("#submit-button").remove();
     $("#dropdown-number").remove();
     $("#crown-dropdown").remove();
-    let newButtons = `<a class="button" style="background-color: #e75480;" href="./index.html">
+    let newButtons = `<a class="button" style="background-color: #e75480; margin-right: 30px" href="./index.html">
                         <p style="font-family: Titan One;">Add Another Game</p>
                       </a>`;
 
