@@ -116,7 +116,7 @@ export const handleDropdownClick = (event) => {
         ${i != rounds - 1 ? `<div class="dropdown" id="dropdown-medal-${i + 1}">
         <div class="dropdown-trigger">
                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" style="z-index:1">
-                    <span id="medal-placeholder-${i+1}">Select medal</span>
+                    <span id="medal-placeholder-${i+1}" data-name="No selection">Select medal</span>
                     <svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
                         <path fill="currentColor"
                             d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
@@ -182,15 +182,87 @@ export const handleDropdownClick = (event) => {
 export const handleInputCardDropdownClick = function (event) {
     let cardNumber = event.target.getAttribute("data-card");
     let medalName = event.target.getAttribute("data-name");
-    $(`#medal-placeholder-${cardNumber}`).replaceWith(`<span id="medal-placeholder-${cardNumber}">${medalName}</span>`)
+    $(`#medal-placeholder-${cardNumber}`).replaceWith(`<span id="medal-placeholder-${cardNumber}" data-name="${medalName}">${medalName}</span>`)
 }
 
 export const handleCrownClick = (event) => {
     let win = event.data
     if (win) {
-        $('#win-crown').replaceWith(`<span id="win-crown">Yes</span>`)
+        $('#win-crown').replaceWith(`<span id="win-crown" data-name="Yes">Yes</span>`)
     } else {
-        $('#win-crown').replaceWith(`<span id="win-crown">No</span>`)
+        $('#win-crown').replaceWith(`<span id="win-crown" data-name="No">No</span>`)
+    }
+}
+
+export const handleSubmitClick = function(event) {
+    const stageList = ['Big Fans', 'Block Party', 'Dizzy Heights', 'Door Dash', 'Egg Scramble', 'Egg Siege', 
+        'Fall Ball', 'Fall Mountain', 'Fruit Chute', 'Gate Crash', 'Hex A Gone', 'Hit Parade', 'Hoarders', 
+        'Hoopsie Daisy', 'Hoopsie Legends', 'Knight Fever', 'Jinxed', 'Jump Club', 'Jump Showdown', 
+        'Perfect Match', 'Rock N Roll', 'Roll Out', 'Royal Fumble', 'See Saw', 'Slime Climb', 'Tail Tag', 
+        'Team Tail Tag', 'The Whirlygig', 'Tip Toe'];
+    const medalList = ['None', 'Bronze', 'Silver', 'Gold'];
+    let stageSelections = [];
+    let medalSelections = [];
+    let crownSelection = "";
+    let validStages = true;
+    let validMedals = true;
+    let validCrown = true;
+
+    //validate stages
+    for (let i = 1; i < 9; i++) {
+        if (document.getElementById(`select-stage-${i}`) == null) {
+            if (i == 1) {
+                alert("make sure you make your selections");
+                validStages = false;
+            }
+            break;
+        } else if (!stageList.includes($(`#select-stage-${i}`).val())) {
+            alert("make sure stages are valid");
+            validStages = false;
+            break;
+        } else {
+            stageSelections.push($(`#select-stage-${i}`).val());
+        }
+    }
+
+    //validate medals
+    if (validStages) {
+        for (let i = 1; i < 8; i++) {
+            if (document.getElementById(`dropdown-medal-${i}`) == null) {
+                break;
+            }
+            else if ($(`#medal-placeholder-${i}`).attr("data-name") == "No selection") {
+                alert("make sure you select all medals");
+                validMedals = false;
+                break;
+            } 
+            else {
+                medalList.forEach(medal => {
+                    if ($(`#medal-placeholder-${i}`).attr("data-name") == medal) {
+                        medalSelections.push(medal);
+                    }
+                });    
+            }    
+        }
+    }
+    
+    if (validStages && validMedals) {
+        if ($(`#win-crown`).attr("data-name") == "Crown?") {
+            validCrown = false;
+            alert("make sure you indicate whether you got a crown or not");
+        } else {
+            crownSelection = $(`#win-crown`).attr("data-name");
+        }
+    }
+    
+    if (validStages && validMedals && validCrown) {
+        let obj = {};
+        obj.numRounds = stageSelections.length;
+        obj.stagesPlayed = stageSelections;
+        obj.medalsEarned = medalSelections;
+        obj.win = crownSelection;
+
+        alert(`Rounds: ${obj.numRounds}\n Stages: ${obj.stagesPlayed} \n Medals: ${obj.medalsEarned} \n Crown: ${obj.win}`);
     }
 }
 
@@ -221,6 +293,8 @@ export const loadIntoDOM = function () {
     for (let i = 1; i < 5; i++) {
         $(document).on('click', '#medal-' + i, i, handleInputCardDropdownClick);
     }
+
+    $(document).on('click', "#submit-button", handleSubmitClick);
 }
 
 $(function () {
