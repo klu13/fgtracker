@@ -125,3 +125,34 @@ form input[type=password] {
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+.autocomplete {
+    background: white;
+    z-index: 1000;
+    font: 14px/22px "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow: auto;
+    box-sizing: border-box;
+    border: 1px solid #dbdbdb;
+    background-color: #fff;
+    border-radius: 1px;
+    box-shadow: inset 0 0.0625em 0.125em rgba(10,10,10,.05);
+}
+
+.autocomplete * {
+    font: inherit;
+}
+
+.autocomplete > div {
+    padding: 8px;
+}
+
+.autocomplete .group {
+    background: #eee;
+}
+
+.autocomplete > div:hover:not(.group),
+.autocomplete > div.selected {
+    background: #add8e6;
+    cursor: pointer;
+}
+

@@ -1,12 +1,17 @@
 export const handleDropdownClick = (event) => {
     let rounds = event.data
     let html = `<div id="display-rounds" class="columns is-multiline">`
+    let stages = ['Big Fans', 'Block Party', 'Dizzy Heights', 'Door Dash', 'Egg Scramble', 'Egg Siege', 
+        'Fall Ball', 'Fall Mountain', 'Fruit Chute', 'Gate Crash', 'Hex A Gone', 'Hit Parade', 'Hoarders', 
+        'Hoopsie Daisy', 'Hoopsie Legends', 'Knight Fever', 'Jinxed', 'Jump Club', 'Jump Showdown', 
+        'Perfect Match', 'Rock N Roll', 'Roll Out', 'Royal Fumble', 'See Saw', 'Slime Climb', 'Tail Tag', 
+        'Team Tail Tag', 'The Whirlygig', 'Tip Toe']
     for (let i = 0; i < rounds; i++) {
         html += `
         <div class="column is-one-quarter" style="margin-top: 20px">
         <div class="card" style="height: 250px; width: 300px; padding: 25px; text-align:center; overflow:visible">
         <h3>Round #${i + 1}</h3>
-        <div class="dropdown" id="dropdown-stage-${i + 1}" style="margin-top:20px;margin-bottom: 20px">
+        ${/*<div class="dropdown" id="dropdown-stage-${i + 1}" style="margin-top:20px;margin-bottom: 20px">
             <div class="dropdown-trigger">
                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                     <span>Select stage</span>
@@ -104,7 +109,10 @@ export const handleDropdownClick = (event) => {
                     </div>     
                 </div>
             </div>
-        </div>
+        </div>*/`
+        <div style="padding: 15px;margin-top:20px;margin-bottom: 20px">
+        <input class='input' id='select-stage-${i}' type='text' placeholder="Enter stage..."></div>
+        `}
         ${i != rounds - 1 ? `<div class="dropdown" id="dropdown-medal-${i + 1}">
         <div class="dropdown-trigger">
             <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" style="z-index:1">
@@ -144,7 +152,31 @@ export const handleDropdownClick = (event) => {
         $("#display-rounds").replaceWith(html)
         $(`#picked-num-rounds`).replaceWith(`<span id='picked-num-rounds'>${rounds} Rounds</span>`)
     }
-
+    for (let i = 0; i < rounds; i++) {
+        let input = document.getElementById(`select-stage-${i}`)
+        autocomplete({
+            input: input,
+            fetch: function(text, update) {
+                text = text.toLowerCase();
+                let suggestions = stages.filter(n => n.toLowerCase().includes(text))
+                update(suggestions);
+            },
+            onSelect: function(item) {
+                input.value = item;
+            },
+            render: function(item, currentValue) {
+                var div = document.createElement("div");
+                div.textContent = item;
+                return div;
+            },
+            renderGroup: function(groupName, currentValue) {
+                var div = document.createElement("div");
+                div.textContent = groupName;
+                return div;
+            },
+            debounceWaitMs: 300,
+        })
+    }
 }
 
 export const handleCrownClick = (event) => {
