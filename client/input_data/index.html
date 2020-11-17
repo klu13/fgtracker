@@ -5,6 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="../favicon.ico" />
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
 	<title>Fall Guys Tracker</title>
 
 	<!-- Include links to CSS stylesheets below -->
@@ -13,14 +15,46 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body style="background-color: #add8e6; font-family: Titan One;">
+	<nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
+		<div class="navbar-brand">
+		  <a class="navbar-item" href="index.html">
+			<h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
+		  </a>
+		</div>
+
+		<div class="navbar-menu">
+		  <div class="navbar-start">
+			<a class="navbar-item" href="index.html">
+			  Home
+			</a>
+
+			<a class="navbar-item">
+			  Enter Stats
+			</a>
+
+			<a class="navbar-item">
+				Career Profile
+			</a>
+		  </div>
+
+		  <div class="navbar-end">
+			<div class="navbar-item">
+			  <div class="buttons">
+				<a class="button" style="background-color: #e75480;" href="login/index.html">
+				  <p>Login/Sign up</p>
+				</a>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	</nav>        
 	<section class="section">
 		<div class="container">
 			<div class="content">
-				<h1 class="title has-text-weight-bold" style="margin-bottom: 30px;">Fall Guys Stat Tracker</h1>
 				<div id="root">
 					<div id="game-stats-container">
-						<h5>Input Game Stats</h5>
+						<h1 class="title has-text-weight-bold" style="margin-bottom: 30px;">Input Game Stats</h1>
 						<div class="dropdown" id="dropdown-number">
 							<div class="dropdown-trigger">
 								<button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
