@@ -55,10 +55,11 @@
 				<div id="root">
 					<div id="game-stats-container">
 						<h1 class="title has-text-weight-bold" style="margin-bottom: 30px;">Input Game Stats</h1>
-						<div class="dropdown" id="dropdown-number">
+						<div class="dropdown tooltip" id="dropdown-number" style="margin-right: 15px">
+							<span class='tooltiptext'>Select the number of rounds you played</span>
 							<div class="dropdown-trigger">
 								<button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-									<span id="num-rounds">Select Number of Rounds</span>
+									<span id="num-rounds">Rounds Played</span>
 									<svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
 										<path fill="currentColor"
 											d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
@@ -90,6 +91,28 @@
 									</button>
 									<button id="dropdown-8" class="dropdown-item button is-white">
 										8
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="dropdown tooltip" id="crown-dropdown">
+							<span class="tooltiptext">Did you win a crown?</span>
+							<div class="dropdown-trigger">
+								<button class="button" aria-haspopup="true" aria-controls="crown-menu">
+									<span id="win-crown">Crown</span>
+									<svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
+										<path fill="currentColor"
+											d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+									</svg>
+								</button>
+							</div>
+							<div class="dropdown-menu" id="crown-menu" role="menu">
+								<div class="dropdown-content" style="width: 113px">
+									<button id="crown-yes" class="dropdown-item button is-white">
+										Yes
+									</button>
+									<button id="crown-no" class="dropdown-item button is-white">
+										No
 									</button>
 								</div>
 							</div>

@@ -105,33 +105,33 @@ export const handleDropdownClick = (event) => {
                 </div>
             </div>
         </div>
-        <div class="dropdown" id="dropdown-medal-${i + 1}">
-            <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" style="z-index:1">
-                    <span>Select medal</span>
-                    <svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu" >
-                <div class="dropdown-content" style="width: 158px">
-                    <div class="dropdown-item">
-                        <button class="button is-white">None</button>
-                    </div>
-                    <div class="dropdown-item">
-                        <button class="button is-white">Bronze</button>
-                    </div>
-                    <div class="dropdown-item">
-                        <button class="button is-white">Silver</button>
-                    </div>
-                    <div class="dropdown-item">
-                        <button class="button is-white">Gold</button>
-                    </div>
+        ${i != rounds - 1 ? `<div class="dropdown" id="dropdown-medal-${i + 1}">
+        <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" style="z-index:1">
+                <span>Select medal</span>
+                <svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+            </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu" role="menu" >
+            <div class="dropdown-content" style="width: 158px">
+                <div class="dropdown-item">
+                    <button class="button is-white">None</button>
+                </div>
+                <div class="dropdown-item">
+                    <button class="button is-white">Bronze</button>
+                </div>
+                <div class="dropdown-item">
+                    <button class="button is-white">Silver</button>
+                </div>
+                <div class="dropdown-item">
+                    <button class="button is-white">Gold</button>
                 </div>
             </div>
         </div>
+        </div>` : ``}
         </div>
         </div>
         `
@@ -147,12 +147,27 @@ export const handleDropdownClick = (event) => {
 
 }
 
+export const handleCrownClick = (event) => {
+    let win = event.data
+    if (win) {
+        $('#win-crown').replaceWith(`<span id="win-crown">Yes</span>`)
+    } else {
+        $('#win-crown').replaceWith(`<span id="win-crown">No</span>`)
+    }
+}
+
 export const loadIntoDOM = function() {
     const $root = $("#root");
     $(document).on('click', '#dropdown-number', function(event) {
         event.stopPropagation()
         $('#dropdown-number').toggleClass('is-active')
     }) 
+    $(document).on('click', '#crown-dropdown', function(event) {
+        event.stopPropagation()
+        $('#crown-dropdown').toggleClass('is-active')
+    })
+    $(document).on('click', '#crown-yes', true, handleCrownClick)
+    $(document).on('click', '#crown-no', false, handleCrownClick)
     for (let i = 1; i < 9; i++) {
         $(document).on('click', '#dropdown-'+i, i, handleDropdownClick)
         $(document).on('click', `#dropdown-stage-${i}`, function(event) {
