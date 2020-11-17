@@ -144,8 +144,11 @@ export const handleDropdownClick = (event) => {
         </div>
         `
     }
-    html += '</div>'
+    html += `</div>`
     if ($(`#picked-num-rounds`).length == 0) {
+        html += `<button id="submit-button" class="button" style="background-color: #e75480">
+                <p style="font-family: Titan One;">Submit!</p>
+            </button>`
         $("#root").append(html)
         $(`#num-rounds`).replaceWith(`<span id='picked-num-rounds'>${rounds} Rounds</span>`)
     } else {
