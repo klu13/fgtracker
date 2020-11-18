@@ -1,116 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="../favicon.ico" />
-        <title>FGT Login</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../favicon.ico" />
+    <title>FGT Login</title>
 
-        <!-- Include links to CSS stylesheets below -->
-        <!-- TODO (optional): Add link to bulma here -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-        <link rel="stylesheet" href="styles.css">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
-    </head>
+    <!-- Include links to CSS stylesheets below -->
+    <!-- TODO (optional): Add link to bulma here -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-    <body style="background-color: #add8e6; font-family: Titan One;">
-        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
-            <div class="navbar-brand">
-              <a class="navbar-item" href="../index.html">
-                <h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
+  <body style="background-color: #add8e6; font-family: Titan One">
+    <nav
+      class="navbar is-transparent"
+      role="navigation"
+      aria-label="main navigation"
+      style="background-color: #add8e6"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" href="../index.html">
+          <h1 class="title is-1" style="color: #e75480">FALL GUYS STATS</h1>
+        </a>
+      </div>
+
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="../index.html"> Home </a>
+
+          <a class="navbar-item"> Enter Stats </a>
+
+          <a class="navbar-item"> Career Profile </a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a
+                class="button"
+                style="background-color: #e75480"
+                href="index.html"
+              >
+                <p>Login/Sign up</p>
               </a>
             </div>
-          
-            <div class="navbar-menu">
-              <div class="navbar-start">
-                <a class="navbar-item" href="../index.html">
-                  Home
-                </a>
-          
-                <a class="navbar-item" href="../input_data/index.html">
-                  Enter Stats
-                </a>
-
-                <a class="navbar-item">
-                    Career Profile
-                </a>
-              </div>
-          
-              <div class="navbar-end">
-                <div class="navbar-item">
-                  <div class="buttons">
-                    <a class="button" style="background-color: #e75480;" href="index.html">
-                      <p>Login/Sign up</p>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>   
-        <div class="container">
-            <div class="flat-form">
-                <ul class="tabs">
-                    <li>
-                        <a href="#login" class="active">Login</a>
-                    </li>
-                    <li>
-                        <a href="#register">Register</a>
-                    </li>
-                    <li>
-                        <a href="#reset">Reset Password</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="login" class="form-action show">
-                <h1>Login</h1>
-                <form>
-                    <ul>
-                        <li>
-                            <input type="text" placeholder="Username" />
-                        </li>
-                        <li>
-                            <input type="password" placeholder="Password" />
-                        </li>
-                        <li>
-                            <input type="submit" value="Login" class="button" />
-                        </li>
-                    </ul>
-                </form>
-            </div>
-            <div id="register" class="form-action is-hidden">
-                <h1>Register</h1>
-                <form>
-                    <ul>
-                        <li>
-                            <input type="text" placeholder="Username" />
-                        </li>
-                        <li>
-                            <input type="password" placeholder="Password" />
-                        </li>
-                        <li>
-                            <input type="submit" value="Sign Up" class="button" />
-                        </li>
-                    </ul>
-                </form>
-            </div>
-            <div id="reset" class="form-action is-hidden">
-                <h1>Reset Password</h1>
-                <form>
-                    <ul>
-                        <li>
-                            <input type="text" placeholder="Email" />
-                        </li>
-                        <li>
-                            <input type="submit" value="Send" class="button" />
-                        </li>
-                    </ul>
-                </form>
-            </div>
+          </div>
         </div>
-        <!-- Include links to JavaScript files below -->
-        <!-- TODO: Add link to jQuery here -->
-        <script src="../node_modules/jquery/dist/jquery.js"></script>
-        <script src="script.js" type="module"></script>
-    </body>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="flat-form">
+        <ul class="tabs">
+          <li>
+            <a href="#login" class="active">Login</a>
+          </li>
+          <li>
+            <a href="#register">Register</a>
+          </li>
+          <li>
+            <a href="#reset">Reset Password</a>
+          </li>
+        </ul>
+      </div>
+      <div id="login" class="form-action show">
+        <h1>Login</h1>
+        <form>
+          <ul>
+            <li>
+              <input id="loginEmail" type="text" placeholder="Email" />
+            </li>
+            <li>
+              <input
+                id="loginPassword"
+                type="password"
+                placeholder="Password"
+              />
+            </li>
+            <li>
+              <input
+                id="loginSubmit"
+                type="button"
+                value="Login"
+                class="button"
+              />
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div id="register" class="form-action is-hidden">
+        <h1>Register</h1>
+        <form>
+          <ul>
+            <li>
+              <input id="registerUsername" type="text" placeholder="Username" />
+            </li>
+            <li>
+              <input id="registerEmail" type="text" placeholder="Email" />
+            </li>
+            <li>
+              <input
+                id="registerPassword"
+                type="password"
+                placeholder="Password"
+              />
+            </li>
+            <li>
+              <input
+                id="registerSubmit"
+                type="button"
+                value="Sign Up"
+                class="button"
+              />
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div id="reset" class="form-action is-hidden">
+        <h1>Reset Password</h1>
+        <form>
+          <ul>
+            <li>
+              <input id="resetEmail" type="text" placeholder="Email" />
+            </li>
+            <li>
+              <input
+                id="resetSubmit"
+                type="button"
+                value="Send"
+                class="button"
+              />
+            </li>
+          </ul>
+        </form>
+      </div>
+    </div>
+    <!-- Include links to JavaScript files below -->
+    <!-- TODO: Add link to jQuery here -->
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="script.js" type="module"></script>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-firestore.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDknBwz44RmCqVG6Iz0AhVjXezfOfPKWv4",
+        authDomain: "fall-guys-stats-519fe.firebaseapp.com",
+        databaseURL: "https://fall-guys-stats-519fe.firebaseio.com",
+        projectId: "fall-guys-stats-519fe",
+        storageBucket: "fall-guys-stats-519fe.appspot.com",
+        messagingSenderId: "178189089496",
+        appId: "1:178189089496:web:a5243036faf1debbe0f5ad",
+        measurementId: "G-48J0YS4HHX",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+      const $register = $("#register");
+      const $reset = $("#reset");
+      const $login = $("#login");
+
+      const handleRegisterSubmit = function () {
+        let email = document.getElementById("registerEmail").value;
+        let password = document.getElementById("registerPassword").value;
+        let username = document.getElementById("registerUsername").value;
+
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then((user) => {
+            // Signed in
+
+            // TODO: email verification if we have time
+            // user.user
+            //   .sendEmailVerification()
+            //   .then(function () {
+            //     // Email sent.
+            //     console.log("Email Sent.");
+            //     let html = `<div> <h1 style="font-size:20px">Registration successful!</h1> </div>`;
+            //     $(`#emailVerifMess`).replace(html);
+            //   })
+            //   .catch(function (error) {
+            //     // An error happened.
+            //   });
+
+            // add user to database
+            const data = {
+              crowns: 0,
+              gamesPlayed: 0,
+              numFinals: 0,
+              roundsPlayed: 0,
+              username: `${username}`,
+            };
+
+            const db = firebase.firestore();
+            db.collection("users")
+              .doc(`${user.user.uid}`)
+              .set(data)
+              .then(function () {
+                console.log("Document successfully written!");
+              })
+              .catch(function (error) {
+                console.error("Error writing document: ", error);
+              });
+
+            // show visual confirmation
+            // let html = `<div id="emailVerifMess"> <h1 style="font-size:20px">You're signed up!</h1> </div>`;
+            // $(`#register`).append(html);
+
+            alert("You're signed up!");
+            window.location.href = "../index.html";
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert(errorMessage);
+          });
+      };
+
+      const handleResetSubmit = function () {
+        let email = document.getElementById("resetEmail").value;
+        firebase
+          .auth()
+          .sendPasswordResetEmail(email)
+          .then(function () {
+            // Email sent.
+            let html = `<div> <h1 style="font-size:20px">Check your email!</h1> </div>`;
+            $(`#reset`).append(html);
+          })
+          .catch(function (error) {
+            // An error happened.
+          });
+      };
+
+      const handleLoginSubmit = function () {
+        let email = document.getElementById("loginEmail").value;
+        let password = document.getElementById("loginPassword").value;
+
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((user) => {
+            // Signed in
+            // Automatically redirect to career profile (goes to home for now)
+            alert("Sign in successful!");
+            window.location.href = "../index.html";
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            alert(errorMessage);
+          });
+      };
+
+      $register.on("click", "#registerSubmit", handleRegisterSubmit);
+      $reset.on("click", "#resetSubmit", handleResetSubmit);
+      $login.on("click", "#loginSubmit", handleLoginSubmit);
+    </script>
+  </body>
 </html>
