@@ -189,10 +189,6 @@
           .then((user) => {
             // Signed in
 
-            // show visual confirmation
-            let html = `<div id="emailVerifMess"> <h1 style="font-size:20px">You're signed up!</h1> </div>`;
-            $(`#register`).append(html);
-
             // TODO: email verification if we have time
             // user.user
             //   .sendEmailVerification()
@@ -225,6 +221,13 @@
               .catch(function (error) {
                 console.error("Error writing document: ", error);
               });
+
+            // show visual confirmation
+            // let html = `<div id="emailVerifMess"> <h1 style="font-size:20px">You're signed up!</h1> </div>`;
+            // $(`#register`).append(html);
+
+            alert("You're signed up!");
+            window.location.href = "../index.html";
           })
           .catch((error) => {
             var errorCode = error.code;
