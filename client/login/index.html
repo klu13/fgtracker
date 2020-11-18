@@ -76,13 +76,22 @@
         <form>
           <ul>
             <li>
-              <input type="text" placeholder="Username" />
+              <input id="loginEmail" type="text" placeholder="Email" />
             </li>
             <li>
-              <input type="password" placeholder="Password" />
+              <input
+                id="loginPassword"
+                type="password"
+                placeholder="Password"
+              />
             </li>
             <li>
-              <input type="submit" value="Login" class="button" />
+              <input
+                id="loginSubmit"
+                type="button"
+                value="Login"
+                class="button"
+              />
             </li>
           </ul>
         </form>
@@ -123,7 +132,12 @@
               <input id="resetEmail" type="text" placeholder="Email" />
             </li>
             <li>
-              <input id="resetSubmit" type="button" value="Send" class="button" />
+              <input
+                id="resetSubmit"
+                type="button"
+                value="Send"
+                class="button"
+              />
             </li>
           </ul>
         </form>
@@ -161,7 +175,8 @@
 
     <script>
       const $register = $("#register");
-      const $reset = $("#reset")
+      const $reset = $("#reset");
+      const $login = $("#login");
 
       const handleRegisterSubmit = function () {
         let email = document.getElementById("registerEmail").value;
@@ -175,15 +190,21 @@
             // Signed in
 
             // show visual confirmation
-            let html = `<div> <h1 style="font-size:20px">Successfully Registered! Verify your email!</h1> </div>`;
+            let html = `<div id="emailVerifMess"> <h1 style="font-size:20px">You're signed up!</h1> </div>`;
             $(`#register`).append(html);
 
-            user.user.sendEmailVerification().then(function() {
-              // Email sent.
-              console.log("Email Sent.")
-            }).catch(function(error) {
-              // An error happened.
-            });
+            // TODO: email verification if we have time
+            // user.user
+            //   .sendEmailVerification()
+            //   .then(function () {
+            //     // Email sent.
+            //     console.log("Email Sent.");
+            //     let html = `<div> <h1 style="font-size:20px">Registration successful!</h1> </div>`;
+            //     $(`#emailVerifMess`).replace(html);
+            //   })
+            //   .catch(function (error) {
+            //     // An error happened.
+            //   });
 
             // add user to database
             const data = {
@@ -191,11 +212,11 @@
               gamesPlayed: 0,
               numFinals: 0,
               roundsPlayed: 0,
-              username: `${username}`
-            }
+              username: `${username}`,
+            };
 
-            const db = firebase.firestore()
-            db.collection('users')
+            const db = firebase.firestore();
+            db.collection("users")
               .doc(`${user.user.uid}`)
               .set(data)
               .then(function () {
@@ -208,7 +229,7 @@
           .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
-            alert(errorMessage)
+            alert(errorMessage);
           });
       };
 
@@ -216,17 +237,41 @@
         let email = document.getElementById("resetEmail").value;
         firebase
           .auth()
-          .sendPasswordResetEmail(email).then(function() {
+          .sendPasswordResetEmail(email)
+          .then(function () {
             // Email sent.
             let html = `<div> <h1 style="font-size:20px">Check your email!</h1> </div>`;
             $(`#reset`).append(html);
-          }).catch(function(error) {
+          })
+          .catch(function (error) {
             // An error happened.
+          });
+      };
+
+      const handleLoginSubmit = function () {
+        let email = document.getElementById("loginEmail").value;
+        let password = document.getElementById("loginPassword").value;
+
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((user) => {
+            // Signed in
+            // Automatically redirect to career profile (goes to home for now)
+            alert("Sign in successful!");
+            window.location.href = "../index.html";
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            alert(errorMessage);
           });
       };
 
       $register.on("click", "#registerSubmit", handleRegisterSubmit);
       $reset.on("click", "#resetSubmit", handleResetSubmit);
+      $login.on("click", "#loginSubmit", handleLoginSubmit);
     </script>
   </body>
 </html>
