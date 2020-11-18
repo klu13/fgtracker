@@ -32,3 +32,31 @@ exports.apiTest = async (req, res, next) => {
         body: 'This is a Server API Test ' + body + ' test'
     });
 };
+
+exports.saveRound = async (req, res, next) => {
+    let body = req.body
+    let userId = body.userId
+    let stage = body.stage
+    let medal = body.medal
+    let qualified = body.qualified
+    let roundNum = body.roundNum
+    const addRound = await db.collection('rounds').add({
+        userId,
+        stage,
+        medal,
+        qualified,
+        roundNum
+    })
+    if (addRound) {
+        console.log('Added document with ID: ' + addRound.id)
+        res.status(201).json({
+            result: 'SUCCESS',
+            message: 'Round saved',
+        })
+    } else {
+        res.status(500).json({
+            result: 'ERROR',
+            message: 'Round not saved'
+        })
+    }
+}

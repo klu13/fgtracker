@@ -226,7 +226,7 @@ export const handleSuccessMessage = function(message) {
 }
 
 
-export const handleSubmitClick = function(event) {
+export const handleSubmitClick = async function(event) {
     const stageList = ['Big Fans', 'Block Party', 'Dizzy Heights', 'Door Dash', 'Egg Scramble', 'Egg Siege', 
         'Fall Ball', 'Fall Mountain', 'Fruit Chute', 'Gate Crash', 'Hex A Gone', 'Hit Parade', 'Hoarders', 
         'Hoopsie Daisy', 'Hoopsie Legends', 'Knight Fever', 'Jinxed', 'Jump Club', 'Jump Showdown', 
@@ -293,7 +293,19 @@ export const handleSubmitClick = function(event) {
         obj.medalsEarned = medalSelections;
         obj.win = crownSelection;
 
-        handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj));
+        let saveRound = await axios({
+            method: 'post',
+            url: 'http://localhost:5000/api/saveRound',
+            data: {
+                userId: 'test',
+                stage: stageSelections[0],
+                medal: medalSelections[0],
+                roundNum: 1,
+                qualified: 1 != stageSelections.length
+            }
+        })
+
+        handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj) + '\nPost request sent with code: ' + saveRound.status);
     }
 }
 
