@@ -233,6 +233,7 @@ export const handleSubmitClick = async function(event) {
         'Perfect Match', 'Rock N Roll', 'Roll Out', 'Royal Fumble', 'See Saw', 'Slime Climb', 'Tail Tag', 
         'Team Tail Tag', 'The Whirlygig', 'Tip Toe'];
     const medalList = ['None', 'Bronze', 'Silver', 'Gold'];
+    const finalsList = ['Fall Mountain', 'Hex A Gone', 'Jump Showdown', 'Royal Fumble'];
     let stageSelections = [];
     let medalSelections = [];
     let crownSelection = "";
@@ -304,7 +305,28 @@ export const handleSubmitClick = async function(event) {
                     roundNum: index + 1,
                     qualified: crownSelection == 'Yes' || index != stageSelections.length - 1,
                 }
-            })
+            });
+        });
+
+        let numCrowns = 0;
+        let numFinals = 0;
+        finalsList.forEach(final => {
+            if (stageSelections[stageSelections.length - 1] == final) {
+                numFinals = 1;
+            }
+        })
+        if (crownSelection == "Yes") {
+            numCrowns = 1;
+        }
+
+        let updateUser = await axios({
+            method: 'put',
+            url: 'http://localhost:5000/api/updateUser',
+            data: {
+                crowns: numCrowns,
+                numFinals: numFinals,
+                numRounds: stageSelections.length
+            }
         })
         handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj));
     }

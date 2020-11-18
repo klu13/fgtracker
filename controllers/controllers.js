@@ -15,11 +15,11 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 firebase.auth().signInWithEmailAndPassword(process.env.FIREBASE_USER, process.env.FIREBASE_PASS)
-.then(user => {
-    console.log('Signed into firebase')
-}).catch(error => {
-    console.log(error)
-})
+    .then(user => {
+        console.log('Signed into firebase')
+    }).catch(error => {
+        console.log(error)
+    })
 const db = firebase.firestore()
 
 exports.apiTest = async (req, res, next) => {
@@ -61,4 +61,31 @@ exports.saveRound = async (req, res, next) => {
             message: 'Round not saved'
         })
     }
+}
+
+exports.updateUser = async (req, res, next) => {
+    let body = req.body;
+    let numRounds = body.numRounds;
+    let numCrowns = body.crowns;
+    let numFinals = body.numFinals;
+    let user_ref = db.collection('users').doc('test user');
+    await user_ref.update({
+        "roundsPlayed": firebase.firestore.FieldValue.increment(numRounds),
+        "crowns": firebase.firestore.FieldValue.increment(numCrowns),
+        "gamesPlayed": firebase.firestore.FieldValue.increment(1),
+        "numFinals": firebase.firestore.FieldValue.increment(numFinals)
+    })
+                            .then( () => {
+                                console.log('Updated user')
+                                res.status(201).json({
+                                result: 'SUCCESS',
+                                message: 'User updated',
+                                })
+                            }).catch((error) => {
+                                console.log(error);
+                                res.status(500).json({
+                                    result: 'ERROR',
+                                    message: 'User not updated'
+                                })
+                            });
 }
