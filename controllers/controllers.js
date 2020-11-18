@@ -40,12 +40,14 @@ exports.saveRound = async (req, res, next) => {
     let medal = body.medal
     let qualified = body.qualified
     let roundNum = body.roundNum
+    let createdAt = new Date().toISOString()
     const addRound = await db.collection('rounds').add({
         userId,
         stage,
         medal,
         qualified,
-        roundNum
+        roundNum,
+        createdAt
     })
     if (addRound) {
         console.log('Added document with ID: ' + addRound.id)

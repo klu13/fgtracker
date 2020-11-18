@@ -177,7 +177,7 @@ export const handleDropdownClick = (event) => {
                 div.textContent = groupName;
                 return div;
             },
-            debounceWaitMs: 300,
+            debounceWaitMs: 200,
         })
     }
 }
@@ -293,19 +293,20 @@ export const handleSubmitClick = async function(event) {
         obj.medalsEarned = medalSelections;
         obj.win = crownSelection;
 
-        let saveRound = await axios({
-            method: 'post',
-            url: 'http://localhost:5000/api/saveRound',
-            data: {
-                userId: 'test',
-                stage: stageSelections[0],
-                medal: medalSelections[0],
-                roundNum: 1,
-                qualified: 1 != stageSelections.length
-            }
+        stageSelections.forEach(async (stage, index) => {
+            let saveRound = await axios({
+                method: 'post',
+                url: 'http://localhost:5000/api/saveRound',
+                data: {
+                    userId: 'test user',
+                    stage: stage,
+                    medal: index != stageSelections.length - 1 ? medalSelections[index] : (crownSelection == 'Yes' ? 'Gold' : 'None'),
+                    roundNum: index + 1,
+                    qualified: crownSelection == 'Yes' || index != stageSelections.length - 1,
+                }
+            })
         })
-
-        handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj) + '\nPost request sent with code: ' + saveRound.status);
+        handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj));
     }
 }
 
