@@ -2,22 +2,26 @@ export const renderNavbar = function () {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
-      // const db = firebase.firestore();
-      // var docRef = db.collection("cities").doc("SF");
+      const db = firebase.firestore();
+      var docRef = db.collection("users").doc(`${user.uid}`);
 
-      // docRef
-      //   .get()
-      //   .then(function (doc) {
-      //     if (doc.exists) {
-      //       console.log("Document data:", doc.data());
-      //     } else {
-      //       // doc.data() will be undefined in this case
-      //       console.log("No such document!");
-      //     }
-      //   })
-      //   .catch(function (error) {
-      //     console.log("Error getting document:", error);
-      //   });
+      let username = docRef
+        .get()
+        .then(function (doc) {
+          if (doc.exists) {
+            username = doc.data().username;
+            return username;
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+          return username;
+        })
+        .catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+
+      console.log(username);
 
       let html = `
       <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
@@ -44,12 +48,12 @@ export const renderNavbar = function () {
     
         <div class="navbar-end">
           <div class="navbar-item">
-            <p></p>
+            <p>${username}</p>
           </div>
           <div class="navbar-item">
             <div class="buttons">
               <a class="button" style="background-color: #e75480;" href="login/index.html">
-                <p>Login/Sign up</p>
+                <p>Sign Out</p>
               </a>
             </div>
           </div>
@@ -151,11 +155,14 @@ export const renderTwitterFeed = function () {
 
 export async function loadIntoDOM() {
   const $root = $("#root");
+  const $navbar = $("#navbar");
   // let test = await axios({
   //   method: "get",
   //   url: "http://localhost:5000/api/apiTest",
   // });
   // $root.append(`<p>${test.data.body}</p>`);
+
+  $navbar.append(renderNavbar());
 
   $root.append(renderBody());
 }

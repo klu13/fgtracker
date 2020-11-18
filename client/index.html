@@ -1,84 +1,93 @@
 <!DOCTYPE html>
 <html lang="en" style="background-color: #add8e6">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="favicon.ico" />
-        <title>Fall Guys Tracker</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" />
+    <title>Fall Guys Tracker</title>
 
-        <!-- Include links to CSS stylesheets below -->
-        <!-- TODO (optional): Add link to bulma here -->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    </head>
+    <!-- Include links to CSS stylesheets below -->
+    <!-- TODO (optional): Add link to bulma here -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+  </head>
 
-    <body style="background-color: #add8e6; font-family: Titan One;">
-        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
-            <div class="navbar-brand">
-              <a class="navbar-item" href="index.html">
-                <h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
+  <body style="background-color: #add8e6; font-family: Titan One">
+    <nav
+      class="navbar is-transparent"
+      role="navigation"
+      aria-label="main navigation"
+      style="background-color: #add8e6"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" href="index.html">
+          <h1 class="title is-1" style="color: #e75480">FALL GUYS STATS</h1>
+        </a>
+      </div>
+
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="index.html"> Home </a>
+
+          <a class="navbar-item" href="input_data/index.html"> Enter Stats </a>
+
+          <a class="navbar-item"> Career Profile </a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a
+                class="button"
+                style="background-color: #e75480"
+                href="login/index.html"
+              >
+                <p>Login/Sign up</p>
               </a>
             </div>
-          
-            <div class="navbar-menu">
-              <div class="navbar-start">
-                <a class="navbar-item" href="index.html">
-                  Home
-                </a>
-          
-                <a class="navbar-item" href="input_data/index.html">
-                  Enter Stats
-                </a>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-                <a class="navbar-item">
-                    Career Profile
-                </a>
-              </div>
-          
-              <div class="navbar-end">
-                <div class="navbar-item">
-                  <div class="buttons">
-                    <a class="button" style="background-color: #e75480;" href="login/index.html">
-                      <p>Login/Sign up</p>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>        
+    <section class="section">
+      <div id="root"></div>
+    </section>
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
 
-        <section class="section">
-            <div id="root"></div>
-        </section>
-        <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
-        <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
 
-        <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-firestore.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDknBwz44RmCqVG6Iz0AhVjXezfOfPKWv4",
+        authDomain: "fall-guys-stats-519fe.firebaseapp.com",
+        databaseURL: "https://fall-guys-stats-519fe.firebaseio.com",
+        projectId: "fall-guys-stats-519fe",
+        storageBucket: "fall-guys-stats-519fe.appspot.com",
+        messagingSenderId: "178189089496",
+        appId: "1:178189089496:web:a5243036faf1debbe0f5ad",
+        measurementId: "G-48J0YS4HHX",
+      };
 
-        <!-- Add Firebase products that you want to use -->
-        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-firestore.js"></script>
-        <script>
-          const firebaseConfig = {
-            apiKey: "AIzaSyDknBwz44RmCqVG6Iz0AhVjXezfOfPKWv4",
-            authDomain: "fall-guys-stats-519fe.firebaseapp.com",
-            databaseURL: "https://fall-guys-stats-519fe.firebaseio.com",
-            projectId: "fall-guys-stats-519fe",
-            storageBucket: "fall-guys-stats-519fe.appspot.com",
-            messagingSenderId: "178189089496",
-            appId: "1:178189089496:web:a5243036faf1debbe0f5ad",
-            measurementId: "G-48J0YS4HHX"
-          };
-
-          firebase.initializeApp(firebaseConfig);
-        </script>
-        <!-- Include links to JavaScript files below -->
-        <!-- TODO: Add link to jQuery here -->
-        <script src="node_modules/jquery/dist/jquery.js"></script>
-        <script src="node_modules/axios/dist/axios.js"></script>
-        <script src="render.js" type="module"></script>
-    </body>
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <!-- Include links to JavaScript files below -->
+    <!-- TODO: Add link to jQuery here -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/axios/dist/axios.js"></script>
+    <script src="render.js" type="module"></script>
+  </body>
 </html>
