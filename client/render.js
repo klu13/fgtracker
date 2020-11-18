@@ -1,11 +1,11 @@
 let db = firebase.firestore()
-db.collection("test").get().then((querySnapshot) => {
+/*db.collection("test").get().then((querySnapshot) => {
   querySnapshot.forEach((doc) => {
       alert(`${doc.id} => ${doc.data()}`);
   });
 });
 
-/*db.collection("test").add({
+db.collection("test").add({
   first: "Alan",
   middle: "Mathison",
   last: "Turing",
