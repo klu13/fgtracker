@@ -120,10 +120,10 @@
         <form>
           <ul>
             <li>
-              <input type="text" placeholder="Email" />
+              <input id="resetEmail" type="text" placeholder="Email" />
             </li>
             <li>
-              <input type="submit" value="Send" class="button" />
+              <input id="resetSubmit" type="button" value="Send" class="button" />
             </li>
           </ul>
         </form>
@@ -161,6 +161,7 @@
 
     <script>
       const $register = $("#register");
+      const $reset = $("#reset")
 
       const handleRegisterSubmit = function () {
         let email = document.getElementById("registerEmail").value;
@@ -173,10 +174,16 @@
           .then((user) => {
             // Signed in
 
-
             // show visual confirmation
-            let html = `<div> <h1 style="font-size:20px">Successfully Registered!</h1> </div>`;
+            let html = `<div> <h1 style="font-size:20px">Successfully Registered! Verify your email!</h1> </div>`;
             $(`#register`).append(html);
+
+            user.user.sendEmailVerification().then(function() {
+              // Email sent.
+              console.log("Email Sent.")
+            }).catch(function(error) {
+              // An error happened.
+            });
 
             // add user to database
             const data = {
@@ -205,7 +212,21 @@
           });
       };
 
+      const handleResetSubmit = function () {
+        let email = document.getElementById("resetEmail").value;
+        firebase
+          .auth()
+          .sendPasswordResetEmail(email).then(function() {
+            // Email sent.
+            let html = `<div> <h1 style="font-size:20px">Check your email!</h1> </div>`;
+            $(`#reset`).append(html);
+          }).catch(function(error) {
+            // An error happened.
+          });
+      };
+
       $register.on("click", "#registerSubmit", handleRegisterSubmit);
+      $reset.on("click", "#resetSubmit", handleResetSubmit);
     </script>
   </body>
 </html>
