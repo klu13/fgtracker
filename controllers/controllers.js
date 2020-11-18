@@ -71,27 +71,28 @@ exports.updateUser = async (req, res, next) => {
     let numGold = body.numGold;
     let numSilver = body.numSilver;
     let numBronze = body.numBronze;
-    let user_ref = db.collection('users').doc('test user');
+    let userId = body.userId
+    let user_ref = db.collection('users').doc(userId);
     await user_ref.update({
         "roundsPlayed": firebase.firestore.FieldValue.increment(numRounds),
         "crowns": firebase.firestore.FieldValue.increment(numCrowns),
         "gamesPlayed": firebase.firestore.FieldValue.increment(1),
         "numFinals": firebase.firestore.FieldValue.increment(numFinals),
-        numGold,
-        numSilver,
-        numBronze
+        "numGold": firebase.firestore.FieldValue.increment(numGold),
+        "numSilver": firebase.firestore.FieldValue.increment(numSilver),
+        "numBronze": firebase.firestore.FieldValue.increment(numBronze)
     })
-                            .then( () => {
-                                console.log('Updated user')
-                                res.status(201).json({
-                                result: 'SUCCESS',
-                                message: 'User updated',
-                                })
-                            }).catch((error) => {
-                                console.log(error);
-                                res.status(500).json({
-                                    result: 'ERROR',
-                                    message: 'User not updated'
-                                })
-                            });
+        .then(() => {
+            console.log('Updated user')
+            res.status(201).json({
+                result: 'SUCCESS',
+                message: 'User updated',
+            })
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                result: 'ERROR',
+                message: 'User not updated'
+            })
+        });
 }
