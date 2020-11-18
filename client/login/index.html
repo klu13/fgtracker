@@ -173,9 +173,10 @@
           .then((user) => {
             // Signed in
 
+
             // show visual confirmation
-            let html = `<div> <h1>Successfully Registered!</h1> </div>`;
-            $(`#registerSubmit`).replaceWith(html);
+            let html = `<div> <h1 style="font-size:20px">Successfully Registered!</h1> </div>`;
+            $(`#register`).append(html);
 
             // add user to database
             // db.collection("users")
