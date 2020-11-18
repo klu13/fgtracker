@@ -45,7 +45,7 @@ export const renderAbout = function () {
 };
 
 export const renderTwitterFeed = function () {
-  let html = `<a class="twitter-timeline" style="max-height: 14em; overflow: auto;" href="https://twitter.com/FallGuysOwl?ref_src=twsrc%5Etfw">Tweets by FallGuysOwl</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  let html = `<a class="twitter-timeline" data-height="83vh" href="https://twitter.com/FallGuysGame?ref_src=twsrc%5Etfw">Tweets by FallGuysOwl</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`;
   return html;
 };
 
