@@ -102,7 +102,7 @@ export const renderBody = function () {
   let html = `
     <section class="section">
       <div class="container">
-        <div class="columns is-vcentered">
+        <div class="columns is-vcentered" style="height: 83vh">
           <div class="column">
             Leaderboard
             ${renderLeaderboard()}
@@ -145,7 +145,7 @@ export const renderAbout = function () {
 };
 
 export const renderTwitterFeed = function () {
-  let html = `<a class="twitter-timeline" data-height="83vh" href="https://twitter.com/FallGuysGame?ref_src=twsrc%5Etfw">Tweets by FallGuysOwl</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  let html = `<a class="twitter-timeline" data-height="83vh" href="https://twitter.com/FallGuysGame?ref_src=twsrc%5Etfw"></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`;
   return html;
 };
 
