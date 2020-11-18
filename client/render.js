@@ -1,3 +1,23 @@
+let db = firebase.firestore()
+db.collection("test").get().then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+      alert(`${doc.id} => ${doc.data()}`);
+  });
+});
+
+/*db.collection("test").add({
+  first: "Alan",
+  middle: "Mathison",
+  last: "Turing",
+  born: 1912
+})
+.then(function(docRef) {
+  alert("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+  alert("Error adding document: ", error);
+});*/
+
 export const renderBody = function () {
   let html = `
     <section class="section">
