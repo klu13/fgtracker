@@ -346,7 +346,11 @@ export const handleSubmitClick = async function(event) {
                 numBronze
             }
         })
-        handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj));
+        if (updateUser.status == 201) {
+            handleSuccessMessage("Success! Your game has been recorded.");
+        } else {
+            $("#error-message").replaceWith(renderErrorMessage("ERROR: Your game was not recorded."));
+        }
     }
 }
 
