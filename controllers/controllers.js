@@ -68,12 +68,18 @@ exports.updateUser = async (req, res, next) => {
     let numRounds = body.numRounds;
     let numCrowns = body.crowns;
     let numFinals = body.numFinals;
+    let numGold = body.numGold;
+    let numSilver = body.numSilver;
+    let numBronze = body.numBronze;
     let user_ref = db.collection('users').doc('test user');
     await user_ref.update({
         "roundsPlayed": firebase.firestore.FieldValue.increment(numRounds),
         "crowns": firebase.firestore.FieldValue.increment(numCrowns),
         "gamesPlayed": firebase.firestore.FieldValue.increment(1),
-        "numFinals": firebase.firestore.FieldValue.increment(numFinals)
+        "numFinals": firebase.firestore.FieldValue.increment(numFinals),
+        numGold,
+        numSilver,
+        numBronze
     })
                             .then( () => {
                                 console.log('Updated user')

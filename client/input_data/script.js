@@ -310,6 +310,21 @@ export const handleSubmitClick = async function(event) {
 
         let numCrowns = 0;
         let numFinals = 0;
+        let numGold = 0;
+        let numSilver = 0;
+        let numBronze = 0;
+
+        medalSelections.forEach(medal => {
+            if (medal == "Gold") {
+                numGold++;
+            } else if (medal == "Silver") {
+                numSilver++;
+            } else if (medal == "Bronze") {
+                numBronze++;
+            }
+        })
+
+
         finalsList.forEach(final => {
             if (stageSelections[stageSelections.length - 1] == final) {
                 numFinals = 1;
@@ -325,7 +340,10 @@ export const handleSubmitClick = async function(event) {
             data: {
                 crowns: numCrowns,
                 numFinals: numFinals,
-                numRounds: stageSelections.length
+                numRounds: stageSelections.length,
+                numGold,
+                numSilver,
+                numBronze
             }
         })
         handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj));
