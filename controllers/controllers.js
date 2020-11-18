@@ -32,3 +32,21 @@ exports.apiTest = async (req, res, next) => {
         body: 'This is a Server API Test ' + body + ' test'
     });
 };
+
+exports.leaderboard = async (req, res, next) => {
+    let crownLeaders = await db.collection('users').orderBy('crowns', 'desc').limit(20).get();
+    if (crownLeaders.empty) {
+        res.status(404).json({
+            message: 'Leaderboard not found'
+        })
+        return
+    }
+    let crownArray = []
+    crownLeaders.forEach(user => {
+        crownArray.push(user.data())
+    })
+    console.log('Leaderboard found')
+    res.status(200).json({
+        crownArray
+    })
+}
