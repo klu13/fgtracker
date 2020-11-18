@@ -179,21 +179,24 @@
             $(`#register`).append(html);
 
             // add user to database
-            // db.collection("users")
-            //   .doc(`${user.uid}`)
-            //   .set({
-            //     crowns: 0,
-            //     gamesPlayed: 0,
-            //     numFinals: 0,
-            //     roundsPlayed: 0,
-            //     username: `${username}`,
-            //   })
-            //   .then(function () {
-            //     console.log("Document successfully written!");
-            //   })
-            //   .catch(function (error) {
-            //     console.error("Error writing document: ", error);
-            //   });
+            const data = {
+              crowns: 0,
+              gamesPlayed: 0,
+              numFinals: 0,
+              roundsPlayed: 0,
+              username: `${username}`
+            }
+
+            const db = firebase.firestore()
+            db.collection('users')
+              .doc(`${user.user.uid}`)
+              .set(data)
+              .then(function () {
+                console.log("Document successfully written!");
+              })
+              .catch(function (error) {
+                console.error("Error writing document: ", error);
+              });
           })
           .catch((error) => {
             var errorCode = error.code;
