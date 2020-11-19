@@ -295,122 +295,6 @@ export const handleSubmitClick = async function(event) {
         obj.medalsEarned = medalSelections;
         obj.win = crownSelection;
 
-        handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj));
-    }
-}
-
-export const renderNavbar = function () {
-    let output = firebase.auth().onAuthStateChanged(async function (user) {
-      if (user) {
-        // User is signed in.
-        const db = firebase.firestore();
-        var docRef = db.collection("users").doc(`${user.uid}`);
-        let username;
-  
-        let doc = await docRef.get();
-  
-        if (doc.exists) {
-          username = doc.data().username;
-        }
-  
-        let html = `
-        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="../index.html">
-              <h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
-            </a>
-          </div>
-      
-          <div class="navbar-menu">
-            <div class="navbar-start">
-              <a class="navbar-item" href="../index.html">
-                Home
-              </a>
-      
-              <a class="navbar-item" href="index.html">
-                Enter Stats
-              </a>
-  
-              <a class="navbar-item" href="../career_profile/index.html">
-                Career Profile
-              </a>
-            </div>
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <p>${username}</p>
-            </div>
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button" style="background-color: #e75480;" href="login/index.html">
-                  <p>Sign Out</p>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>`;
-        $("#navbar").append(html);
-      } else {
-        // No user is signed in.
-        let html = `
-        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="../index.html">
-              <h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
-            </a>
-          </div>
-      
-          <div class="navbar-menu">
-            <div class="navbar-start">
-              <a class="navbar-item" href="../index.html">
-                Home
-              </a>
-      
-              <a class="navbar-item" href="index.html">
-                Enter Stats
-              </a>
-  
-              <a class="navbar-item" href="../career_profile/index.html">
-                Career Profile
-              </a>
-            </div>
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button" style="background-color: #e75480;" href="../login/index.html">
-                  <p>Login/Sign up</p>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>`;
-        $("#navbar").append(html);
-      }
-    });
-  };
-
-export const loadIntoDOM = function () {
-    const $root = $("#root");
-    renderNavbar();
-
-    $(document).on('click', '#dropdown-number', function (event) {
-        event.stopPropagation()
-        $('#dropdown-number').toggleClass('is-active')
-    })
-    $(document).on('click', '#crown-dropdown', function (event) {
-        event.stopPropagation()
-        $('#crown-dropdown').toggleClass('is-active')
-    })
-    $(document).on('click', '#crown-yes', true, handleCrownClick)
-    $(document).on('click', '#crown-no', false, handleCrownClick)
-    for (let i = 1; i < 9; i++) {
-        $(document).on('click', '#dropdown-' + i, i, handleDropdownClick)
-        $(document).on('click', `#dropdown-stage-${i}`, function (event) {
-            event.stopPropagation()
-            $(`#dropdown-stage-${i}`).toggleClass('is-active')
         stageSelections.forEach(async (stage, index) => {
             let saveRound = await axios({
                 method: 'post',
@@ -543,7 +427,101 @@ export const initialLoad = () => {
     `
 }
 
+export const renderNavbar = function () {
+    let output = firebase.auth().onAuthStateChanged(async function (user) {
+      if (user) {
+        // User is signed in.
+        const db = firebase.firestore();
+        var docRef = db.collection("users").doc(`${user.uid}`);
+        let username;
+  
+        let doc = await docRef.get();
+  
+        if (doc.exists) {
+          username = doc.data().username;
+        }
+  
+        let html = `
+        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="../index.html">
+              <h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
+            </a>
+          </div>
+      
+          <div class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="../index.html">
+                Home
+              </a>
+      
+              <a class="navbar-item" href="index.html">
+                Enter Stats
+              </a>
+  
+              <a class="navbar-item" href="../career_profile/index.html">
+                Career Profile
+              </a>
+            </div>
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <p>${username}</p>
+            </div>
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button" style="background-color: #e75480;" href="login/index.html">
+                  <p>Sign Out</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>`;
+        $("#navbar").append(html);
+      } else {
+        // No user is signed in.
+        let html = `
+        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="../index.html">
+              <h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
+            </a>
+          </div>
+      
+          <div class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="../index.html">
+                Home
+              </a>
+      
+              <a class="navbar-item" href="index.html">
+                Enter Stats
+              </a>
+  
+              <a class="navbar-item" href="../career_profile/index.html">
+                Career Profile
+              </a>
+            </div>
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button" style="background-color: #e75480;" href="../login/index.html">
+                  <p>Login/Sign up</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>`;
+        $("#navbar").append(html);
+      }
+    });
+  };
+
 export const loadIntoDOM = function () {
+    renderNavbar();
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
