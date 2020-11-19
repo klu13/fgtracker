@@ -117,8 +117,8 @@ export const renderBody = async function () {
 
 export const renderLeaderboard = async function () {
   let html = `
-  <h1 class="title has-text-weight-bold">Leaderboard</h1>
-  <table class="table" style="width: 800px;text-align: center; margin-bottom: 50px">
+  <h1 class="title has-text-weight-bold">Leaderboards</h1>
+  <table class="table is-striped" style="width: 900px;text-align: center; margin-bottom: 40px; border-radius: 7px">
     <thead>
       <tr>
         <th>Rank</th>
@@ -145,12 +145,12 @@ export const renderLeaderboard = async function () {
         <td>${i+1}</td>
         <td>${crownArray[i].username}</td>
         <td>${crownArray[i].crowns}</td>
-        <td>${crownArray[i].gamesPlayed > 0 ? Math.round(crownArray[i].crowns * 100 / crownArray[i].gamesPlayed) : '0'}%</td>
+        <td>${crownArray[i].gamesPlayed > 0 ? Math.round((crownArray[i].crowns/ crownArray[i].gamesPlayed)*100) : '0'}%</td>
       </tr>`
   }
   html += `</tbody>
   </table>
-  <table class="table" style="width: 800px;text-align: center">
+  <table class="table is-striped" style="width: 900px;text-align: center; border-radius: 7px">
     <thead>
       <tr>
         <th>Rank</th>
@@ -166,7 +166,7 @@ export const renderLeaderboard = async function () {
         <td>${i+1}</td>
         <td>${goldArray[i].username}</td>
         <td>${goldArray[i].numGold}</td>
-        <td>${goldArray[i].gamesPlayed > 0 ? Math.round(goldArray[i].numGold * 100 / goldArray[i].gamesPlayed) : '0'}%</td>
+        <td>${goldArray[i].roundsPlayed > 0 ? Math.round(goldArray[i].numGold * 100 / goldArray[i].roundsPlayed) : '0'}%</td>
       </tr>`
   }
   html += `</tbody></table>`;
