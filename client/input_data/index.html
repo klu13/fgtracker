@@ -16,120 +16,46 @@
 </head>
 
 <body style="background-color: #add8e6; font-family: Titan One;">
-	<nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
-		<div class="navbar-brand">
-		  <a class="navbar-item" href="index.html">
-			<h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
-		  </a>
-		</div>
-
-		<div class="navbar-menu">
-		  <div class="navbar-start">
-			<a class="navbar-item" href="../index.html">
-			  Home
-			</a>
-
-			<a class="navbar-item" href="index.html">
-			  Enter Stats
-			</a>
-
-			<a class="navbar-item" href="../career_profile/index.html">
-				Career Profile
-			</a>
-		  </div>
-
-		  <div class="navbar-end">
-			<div class="navbar-item">
-			  <div class="buttons">
-				<a class="button" style="background-color: #e75480;" href="../login/index.html">
-				  <p>Login/Sign up</p>
-				</a>
-			  </div>
-			</div>
-		  </div>
-		</div>
-	</nav>        
+	<div id="navbar"></div>
+  
 	<section class="section">
 		<div class="container">
 			<div class="content">
 				<div id="root">
-					<div id="game-stats-container">
-						<h1 id="input-title" class="title has-text-weight-bold" style="margin-bottom: 30px;">Input Game Stats</h1>
-						<div id="error-message"></div>
-						<div class="dropdown tooltip" id="dropdown-number" style="margin-right: 15px">
-							<span class='tooltiptext'>Select the number of rounds you played</span>
-							<div class="dropdown-trigger">
-								<button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-									<span id="num-rounds">Rounds Played</span>
-									<svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
-										<path fill="currentColor"
-											d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-									</svg>
-								</button>
-							</div>
-							<div class="dropdown-menu" id="dropdown-menu" role="menu">
-								<div class="dropdown-content" style="width: 134px">
-									<button id="dropdown-1" class="dropdown-item button is-white">
-										1
-									</button>
-									<button id="dropdown-2" class="dropdown-item button is-white">
-										2
-									</button>
-									<button id="dropdown-3" class="dropdown-item button is-white">
-										3
-									</button>
-									<button id="dropdown-4" class="dropdown-item button is-white">
-										4
-									</button>
-									<button id="dropdown-5" class="dropdown-item button is-white">
-										5
-									</button>
-									<button id="dropdown-6" class="dropdown-item button is-white">
-										6
-									</button>
-									<button id="dropdown-7" class="dropdown-item button is-white">
-										7
-									</button>
-									<button id="dropdown-8" class="dropdown-item button is-white">
-										8
-									</button>
-								</div>
-							</div>
-						</div>
-						<div class="dropdown tooltip" id="crown-dropdown">
-							<span class="tooltiptext">Did you win a crown?</span>
-							<div class="dropdown-trigger">
-								<button class="button" aria-haspopup="true" aria-controls="crown-menu">
-									<span id="win-crown" data-name="Crown?">Crown?</span>
-									<svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
-										<path fill="currentColor"
-											d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-									</svg>
-								</button>
-							</div>
-							<div class="dropdown-menu" id="crown-menu" role="menu">
-								<div class="dropdown-content" style="width: 113px">
-									<button id="crown-yes" class="dropdown-item button is-white">
-										Yes
-									</button>
-									<button id="crown-no" class="dropdown-item button is-white">
-										No
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>	
 				</div>
 			</div>
 		</div>
 	</section>
+	<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
 
-	<!-- Include links to JavaScript files below -->
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-firestore.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDknBwz44RmCqVG6Iz0AhVjXezfOfPKWv4",
+        authDomain: "fall-guys-stats-519fe.firebaseapp.com",
+        databaseURL: "https://fall-guys-stats-519fe.firebaseio.com",
+        projectId: "fall-guys-stats-519fe",
+        storageBucket: "fall-guys-stats-519fe.appspot.com",
+        messagingSenderId: "178189089496",
+        appId: "1:178189089496:web:a5243036faf1debbe0f5ad",
+        measurementId: "G-48J0YS4HHX",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+    </script>
 	<!-- TODO: Add link to jQuery here -->
 	<!-- <script src="./node_modules/axios/dist/axios.js"></script> -->
-	<script src="script.js" type="module"></script>
 	<script src="../node_modules/jquery/dist/jquery.js"></script>
 	<script src="../node_modules//autocompleter/autocomplete.js"></script>
+	<script src="../node_modules//axios//dist/axios.js"></script>
+	<script src="script.js" type="module"></script>
 </body>
 
 </html>
