@@ -475,7 +475,7 @@ export const renderNavbar = function () {
             </div>
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button" style="background-color: #e75480;" href="../login/index.html">
+                <a class="button" id="signOut" style="background-color: #e75480;" href="../login/index.html">
                   <p>Sign Out</p>
                 </a>
               </div>
@@ -538,6 +538,14 @@ export const loadIntoDOM = function () {
           window.location.replace('../login/index.html')
         }
     });
+    $(document).on('click', '#signOut', function (event) {
+        firebase.auth().signOut().then(function() {
+          // Sign-out successful.
+        }).catch(function(error) {
+          // An error happened.
+        });
+    
+    })
 }
 
 $(function () {
