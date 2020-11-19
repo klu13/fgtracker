@@ -1,3 +1,7 @@
 th {
     font-weight: normal
 }
+
+table, td {
+    border-radius: 7px;
+}
