@@ -70,14 +70,13 @@ export const renderNavbar = function () {
   });
 };
 
-export const renderBody = function () {
+export const renderBody = async function () {
   let html = `
     <section class="section">
       <div class="container">
-        <div class="columns is-vcentered" style="height: 83vh">
+        <div class="columns" style="height: 83vh">
           <div class="column">
-            Leaderboard
-            ${renderLeaderboard()}
+            ${await renderLeaderboard()}
           </div>
           <div class="column is-one-quarter">
             ${renderTwitterFeed()}
@@ -95,8 +94,61 @@ export const renderBody = function () {
   return html;
 };
 
-export const renderLeaderboard = function () {
-  let html = ``;
+export const renderLeaderboard = async function () {
+  let html = `
+  <h1 class="title has-text-weight-bold">Leaderboards</h1>
+  <table class="table is-striped" style="width: 900px;text-align: center; margin-bottom: 40px; border-radius: 7px">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th style="width: 200px">Crowns</th>
+        <th style="width: 200px">Win Percentage</th>
+      </tr>
+    </thead>
+    <tbody>`
+
+  let crownRequest = await axios({
+    method: 'get',
+    url: 'http://localhost:5000/api/leaderboard'
+  })
+  let crownArray = []
+  let goldArray = []
+  if (crownRequest.status == 200) {
+    crownArray = crownRequest.data.crownArray
+    goldArray = crownRequest.data.goldArray
+  }
+  for (let i = 0; i < crownArray.length; i++) {
+    html += `
+      <tr>
+        <td>${i+1}</td>
+        <td>${crownArray[i].username}</td>
+        <td>${crownArray[i].crowns}</td>
+        <td>${crownArray[i].gamesPlayed > 0 ? Math.round((crownArray[i].crowns/ crownArray[i].gamesPlayed)*10000) / 100 : '0'}%</td>
+      </tr>`
+  }
+  html += `</tbody>
+  </table>
+  <table class="table is-striped" style="width: 900px;text-align: center; border-radius: 7px">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th style="width: 200px">Gold Medals</th>
+        <th style="width: 200px">Gold Percentage</th>
+      </tr>
+    </thead>
+    <tbody>`
+  for (let i = 0; i < goldArray.length; i++) {
+    html += `
+      <tr>
+        <td>${i+1}</td>
+        <td>${goldArray[i].username}</td>
+        <td>${goldArray[i].numGold}</td>
+        <td>${goldArray[i].roundsPlayed > 0 ? Math.round(goldArray[i].numGold * 10000 / goldArray[i].roundsPlayed) / 100 : '0'}%</td>
+      </tr>`
+  }
+  html += `</tbody></table>`;
   return html;
 };
 
@@ -126,7 +178,7 @@ export async function loadIntoDOM() {
 
   renderNavbar();
 
-  $root.append(renderBody());
+  $root.append(await renderBody());
 
   $(document).on('click', '#signOut', function (event) {
     firebase.auth().signOut().then(function() {
