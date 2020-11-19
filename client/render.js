@@ -97,7 +97,7 @@ export const renderBody = async function () {
 export const renderLeaderboard = async function () {
   let html = `
   <h1 class="title has-text-weight-bold">Leaderboards</h1>
-  <table class="table is-striped" style="width: 900px;text-align: center; margin-bottom: 40px; border-radius: 7px;">
+  <table class="table is-striped" style="width: 900px;text-align: center; margin-bottom: 40px">
     <thead>
       <tr>
         <th >Rank</th>
@@ -129,7 +129,7 @@ export const renderLeaderboard = async function () {
   }
   html += `</tbody>
   </table>
-  <table class="table is-striped" style="width: 900px;text-align: center; border-radius: 7px">
+  <table class="table is-striped" style="width: 900px;text-align: center">
     <thead>
       <tr>
         <th>Rank</th>
