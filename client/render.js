@@ -46,7 +46,7 @@ export const renderNavbar = function () {
           </div>
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button" style="background-color: #e75480;" href="login/index.html">
+              <a class="button" id="signOut" style="background-color: #e75480;" href="login/index.html">
                 <p>Sign Out</p>
               </a>
             </div>
@@ -97,10 +97,10 @@ export const renderBody = async function () {
 export const renderLeaderboard = async function () {
   let html = `
   <h1 class="title has-text-weight-bold">Leaderboards</h1>
-  <table class="table is-striped" style="width: 900px;text-align: center; margin-bottom: 40px; border-radius: 7px">
+  <table class="table is-striped" style="width: 900px;text-align: center; margin-bottom: 40px; border-radius: 7px;">
     <thead>
       <tr>
-        <th>Rank</th>
+        <th >Rank</th>
         <th>Username</th>
         <th style="width: 200px">Crowns</th>
         <th style="width: 200px">Win Percentage</th>
@@ -175,13 +175,19 @@ export const renderTwitterFeed = function () {
 
 export async function loadIntoDOM() {
   const $root = $("#root");
-  // let test = await axios({
-  //   method: "get",
-  //   url: "http://localhost:5000/api/apiTest",
-  // });
-  // $root.append(`<p>${test.data.body}</p>`);
-  renderNavbar()
+
+  renderNavbar();
+
   $root.append(await renderBody());
+
+  $(document).on('click', '#signOut', function (event) {
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }).catch(function(error) {
+      // An error happened.
+    });
+
+  })
 }
 
 $(function () {
