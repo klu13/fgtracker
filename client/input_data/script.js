@@ -177,7 +177,7 @@ export const handleDropdownClick = (event) => {
                 div.textContent = groupName;
                 return div;
             },
-            debounceWaitMs: 300,
+            debounceWaitMs: 200,
         })
     }
 }
@@ -226,19 +226,21 @@ export const handleSuccessMessage = function(message) {
 }
 
 
-export const handleSubmitClick = function(event) {
+export const handleSubmitClick = async function(event) {
     const stageList = ['Big Fans', 'Block Party', 'Dizzy Heights', 'Door Dash', 'Egg Scramble', 'Egg Siege', 
         'Fall Ball', 'Fall Mountain', 'Fruit Chute', 'Gate Crash', 'Hex A Gone', 'Hit Parade', 'Hoarders', 
         'Hoopsie Daisy', 'Hoopsie Legends', 'Knight Fever', 'Jinxed', 'Jump Club', 'Jump Showdown', 
         'Perfect Match', 'Rock N Roll', 'Roll Out', 'Royal Fumble', 'See Saw', 'Slime Climb', 'Tail Tag', 
         'Team Tail Tag', 'The Whirlygig', 'Tip Toe'];
     const medalList = ['None', 'Bronze', 'Silver', 'Gold'];
+    const finalsList = ['Fall Mountain', 'Hex A Gone', 'Jump Showdown', 'Royal Fumble'];
     let stageSelections = [];
     let medalSelections = [];
     let crownSelection = "";
     let validStages = true;
     let validMedals = true;
     let validCrown = true;
+    let userId = event.data
 
     //validate stages
     for (let i = 1; i < 9; i++) {
@@ -293,39 +295,176 @@ export const handleSubmitClick = function(event) {
         obj.medalsEarned = medalSelections;
         obj.win = crownSelection;
 
-        handleSuccessMessage("Success! Here's your json object: \n" + JSON.stringify(obj));
+        stageSelections.forEach(async (stage, index) => {
+            let saveRound = await axios({
+                method: 'post',
+                url: 'http://localhost:5000/api/saveRound',
+                data: {
+                    userId,
+                    stage: stage,
+                    medal: index != stageSelections.length - 1 ? medalSelections[index] : (crownSelection == 'Yes' ? 'Gold' : 'None'),
+                    roundNum: index + 1,
+                    qualified: crownSelection == 'Yes' || index != stageSelections.length - 1,
+                }
+            });
+        });
+
+        let numCrowns = 0;
+        let numFinals = 0;
+        let numGold = 0;
+        let numSilver = 0;
+        let numBronze = 0;
+
+        medalSelections.forEach(medal => {
+            if (medal == "Gold") {
+                numGold++;
+            } else if (medal == "Silver") {
+                numSilver++;
+            } else if (medal == "Bronze") {
+                numBronze++;
+            }
+        })
+
+
+        finalsList.forEach(final => {
+            if (stageSelections[stageSelections.length - 1] == final) {
+                numFinals = 1;
+            }
+        })
+        if (crownSelection == "Yes") {
+            numCrowns = 1;
+        }
+
+        let updateUser = await axios({
+            method: 'put',
+            url: 'http://localhost:5000/api/updateUser',
+            data: {
+                crowns: numCrowns,
+                numFinals: numFinals,
+                numRounds: stageSelections.length,
+                numGold,
+                numSilver,
+                numBronze,
+                userId
+            }
+        })
+        if (updateUser.status == 201) {
+            handleSuccessMessage("Success! Your game has been recorded.");
+        } else {
+            $("#error-message").replaceWith(renderErrorMessage("ERROR: Your game was not recorded."));
+        }
     }
 }
 
+export const initialLoad = () => {
+    return `
+        <div id="game-stats-container">
+        <h1 id="input-title" class="title has-text-weight-bold" style="margin-bottom: 30px;">Input Game Stats</h1>
+        <div id="error-message"></div>
+        <div class="dropdown tooltip" id="dropdown-number" style="margin-right: 15px">
+            <span class='tooltiptext'>Select the number of rounds you played</span>
+            <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <span id="num-rounds">Rounds Played</span>
+                    <svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-content" style="width: 134px">
+                    <button id="dropdown-1" class="dropdown-item button is-white">
+                        1
+                    </button>
+                    <button id="dropdown-2" class="dropdown-item button is-white">
+                        2
+                    </button>
+                    <button id="dropdown-3" class="dropdown-item button is-white">
+                        3
+                    </button>
+                    <button id="dropdown-4" class="dropdown-item button is-white">
+                        4
+                    </button>
+                    <button id="dropdown-5" class="dropdown-item button is-white">
+                        5
+                    </button>
+                    <button id="dropdown-6" class="dropdown-item button is-white">
+                        6
+                    </button>
+                    <button id="dropdown-7" class="dropdown-item button is-white">
+                        7
+                    </button>
+                    <button id="dropdown-8" class="dropdown-item button is-white">
+                        8
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown tooltip" id="crown-dropdown">
+            <span class="tooltiptext">Did you win a crown?</span>
+            <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="crown-menu">
+                    <span id="win-crown" data-name="Crown?">Crown?</span>
+                    <svg style="width:24px;height:24px;margin-left:10px" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="dropdown-menu" id="crown-menu" role="menu">
+                <div class="dropdown-content" style="width: 113px">
+                    <button id="crown-yes" class="dropdown-item button is-white">
+                        Yes
+                    </button>
+                    <button id="crown-no" class="dropdown-item button is-white">
+                        No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>	
+    `
+}
+
 export const loadIntoDOM = function () {
-    const $root = $("#root");
-    $(document).on('click', '#dropdown-number', function (event) {
-        event.stopPropagation()
-        $('#dropdown-number').toggleClass('is-active')
-    })
-    $(document).on('click', '#crown-dropdown', function (event) {
-        event.stopPropagation()
-        $('#crown-dropdown').toggleClass('is-active')
-    })
-    $(document).on('click', '#crown-yes', true, handleCrownClick)
-    $(document).on('click', '#crown-no', false, handleCrownClick)
-    for (let i = 1; i < 9; i++) {
-        $(document).on('click', '#dropdown-' + i, i, handleDropdownClick)
-        $(document).on('click', `#dropdown-stage-${i}`, function (event) {
-            event.stopPropagation()
-            $(`#dropdown-stage-${i}`).toggleClass('is-active')
-        });
-        $(document).on('click', `#dropdown-medal-${i}`, function (event) {
-            event.stopPropagation()
-            $(`#dropdown-medal-${i}`).toggleClass('is-active')
-        })
-    }
-
-    for (let i = 1; i < 5; i++) {
-        $(document).on('click', '#medal-' + i, i, handleInputCardDropdownClick);
-    }
-
-    $(document).on('click', "#submit-button", handleSubmitClick);
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          const $root = $("#root");
+          $root.append(initialLoad())
+          $(document).on('click', '#dropdown-number', function (event) {
+              event.stopPropagation()
+              $('#dropdown-number').toggleClass('is-active')
+          })
+          $(document).on('click', '#crown-dropdown', function (event) {
+              event.stopPropagation()
+              $('#crown-dropdown').toggleClass('is-active')
+          })
+          $(document).on('click', '#crown-yes', true, handleCrownClick)
+          $(document).on('click', '#crown-no', false, handleCrownClick)
+          for (let i = 1; i < 9; i++) {
+              $(document).on('click', '#dropdown-' + i, i, handleDropdownClick)
+              $(document).on('click', `#dropdown-stage-${i}`, function (event) {
+                  event.stopPropagation()
+                  $(`#dropdown-stage-${i}`).toggleClass('is-active')
+              });
+              $(document).on('click', `#dropdown-medal-${i}`, function (event) {
+                  event.stopPropagation()
+                  $(`#dropdown-medal-${i}`).toggleClass('is-active')
+              })
+          }
+      
+          for (let i = 1; i < 5; i++) {
+              $(document).on('click', '#medal-' + i, i, handleInputCardDropdownClick);
+          }
+      
+          $(document).on('click', "#submit-button", user.uid, handleSubmitClick);
+        } else {
+          // No user is signed in.
+          window.location.replace('../login/index.html')
+        }
+    });
 }
 
 $(function () {
