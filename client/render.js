@@ -197,7 +197,7 @@ export async function loadIntoDOM() {
   //   url: "http://localhost:5000/api/apiTest",
   // });
   // $root.append(`<p>${test.data.body}</p>`);
-
+  renderNavbar()
   $root.append(await renderBody());
 }
 
