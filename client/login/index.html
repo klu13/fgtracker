@@ -37,9 +37,9 @@
         <div class="navbar-start">
           <a class="navbar-item" href="../index.html"> Home </a>
 
-          <a class="navbar-item"> Enter Stats </a>
+          <a class="navbar-item" href="../input_data/index.html"> Enter Stats </a>
 
-          <a class="navbar-item"> Career Profile </a>
+          <a class="navbar-item" href="../career_profile/index.html"> Career Profile </a>
         </div>
 
         <div class="navbar-end">
@@ -217,17 +217,14 @@
               .set(data)
               .then(function () {
                 console.log("Document successfully written!");
+
+                // show visual of successful registration
+                alert("You're signed up!");
+                window.location.href = "../index.html";
               })
               .catch(function (error) {
                 console.error("Error writing document: ", error);
               });
-
-            // show visual confirmation
-            // let html = `<div id="emailVerifMess"> <h1 style="font-size:20px">You're signed up!</h1> </div>`;
-            // $(`#register`).append(html);
-
-            alert("You're signed up!");
-            window.location.href = "../index.html";
           })
           .catch((error) => {
             var errorCode = error.code;
