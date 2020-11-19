@@ -121,6 +121,7 @@ export const renderLeaderboard = async function () {
   <table class="table" style="width: 800px;text-align: center; margin-bottom: 50px">
     <thead>
       <tr>
+        <th>Rank</th>
         <th>Username</th>
         <th>Crowns</th>
         <th>Win Percentage</th>
@@ -133,12 +134,15 @@ export const renderLeaderboard = async function () {
     url: 'http://localhost:5000/api/leaderboard'
   })
   let crownArray = []
+  let goldArray = []
   if (crownRequest.status == 200) {
     crownArray = crownRequest.data.crownArray
+    goldArray = crownRequest.data.goldArray
   }
   for (let i = 0; i < crownArray.length; i++) {
     html += `
       <tr>
+        <td>${i+1}</td>
         <td>${crownArray[i].username}</td>
         <td>${crownArray[i].crowns}</td>
         <td>${crownArray[i].gamesPlayed > 0 ? Math.round(crownArray[i].crowns * 100 / crownArray[i].gamesPlayed) : '0'}%</td>
@@ -149,22 +153,22 @@ export const renderLeaderboard = async function () {
   <table class="table" style="width: 800px;text-align: center">
     <thead>
       <tr>
+        <th>Rank</th>
         <th>Username</th>
         <th>Gold Medals</th>
-        <th>Qualified Percentage</th>
+        <th>Gold Percentage</th>
       </tr>
     </thead>
     <tbody>`
-    // <tr>
-    //     <td>kevin</td>
-    //     <td>150</td>
-    //     <td>90%</td>
-    //   </tr>
-    //   <tr>
-    //     <td>Wooziful</td>
-    //     <td>140</td>
-    //     <td>80%</td>
-    //   </tr>
+  for (let i = 0; i < goldArray.length; i++) {
+    html += `
+      <tr>
+        <td>${i+1}</td>
+        <td>${goldArray[i].username}</td>
+        <td>${goldArray[i].numGold}</td>
+        <td>${goldArray[i].gamesPlayed > 0 ? Math.round(goldArray[i].numGold * 100 / goldArray[i].gamesPlayed) : '0'}%</td>
+      </tr>`
+  }
   html += `</tbody></table>`;
   return html;
 };

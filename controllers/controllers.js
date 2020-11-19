@@ -34,10 +34,10 @@ exports.apiTest = async (req, res, next) => {
 };
 
 exports.leaderboard = async (req, res, next) => {
-    let crownLeaders = await db.collection('users').orderBy('crowns', 'desc').limit(20).get();
+    let crownLeaders = await db.collection('users').orderBy('crowns', 'desc').limit(10).get();
     if (crownLeaders.empty) {
         res.status(404).json({
-            message: 'Leaderboard not found'
+            message: 'Crown leaderboard not found'
         })
         return
     }
@@ -45,8 +45,20 @@ exports.leaderboard = async (req, res, next) => {
     crownLeaders.forEach(user => {
         crownArray.push(user.data())
     })
+    let goldLeaders = await db.collection('users').orderBy('numGold', 'desc').limit(10).get();
+    if (goldLeaders.empty) {
+        res.status(404).json({
+            message: 'Gold leaderboard not found'
+        })
+        return
+    }
+    let goldArray = []
+    goldLeaders.forEach(user => {
+        goldArray.push(user.data())
+    })
     console.log('Leaderboard found')
     res.status(200).json({
-        crownArray
+        crownArray,
+        goldArray
     })
 }
