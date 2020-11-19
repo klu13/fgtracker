@@ -30,7 +30,7 @@ export const renderNavbar = function () {
               Enter Stats
             </a>
 
-            <a class="navbar-item">
+            <a class="navbar-item" href="career_profile/index.html">
               Career Profile
             </a>
           </div>
@@ -70,7 +70,7 @@ export const renderNavbar = function () {
               Enter Stats
             </a>
 
-            <a class="navbar-item">
+            <a class="navbar-item" href="career_profile/index.html">
               Career Profile
             </a>
           </div>
