@@ -428,6 +428,33 @@ export const initialLoad = () => {
 }
 
 export const renderNavbar = function () {
+    let html = `
+      <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="../index.html">
+            <h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
+          </a>
+        </div>
+  
+        <div class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item" href="../index.html">
+              Home
+            </a>
+  
+            <a class="navbar-item" href="index.html">
+              Enter Stats
+            </a>
+  
+            <a class="navbar-item" href="../career_profile/index.html">
+              Career Profile
+            </a>
+          </div>
+        </div>
+        <div class="navbar-end"></div>
+      </nav>
+    `
+    $("#navbar").append(html)
     let output = firebase.auth().onAuthStateChanged(async function (user) {
       if (user) {
         // User is signed in.
@@ -442,68 +469,22 @@ export const renderNavbar = function () {
         }
   
         let html = `
-        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="../index.html">
-              <h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
-            </a>
-          </div>
-      
-          <div class="navbar-menu">
-            <div class="navbar-start">
-              <a class="navbar-item" href="../index.html">
-                Home
-              </a>
-      
-              <a class="navbar-item" href="index.html">
-                Enter Stats
-              </a>
-  
-              <a class="navbar-item" href="../career_profile/index.html">
-                Career Profile
-              </a>
-            </div>
-      
           <div class="navbar-end">
             <div class="navbar-item">
               <p>${username}</p>
             </div>
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button" style="background-color: #e75480;" href="login/index.html">
+                <a class="button" style="background-color: #e75480;" href="../login/index.html">
                   <p>Sign Out</p>
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-      </nav>`;
-        $("#navbar").append(html);
-      } else {
+          </div>`;
+        $(".navbar-end").replaceWith(html);
+    } else {
         // No user is signed in.
         let html = `
-        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background-color: #add8e6;">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="../index.html">
-              <h1 class="title is-1" style="color: #e75480;">FALL GUYS STATS</h1>
-            </a>
-          </div>
-      
-          <div class="navbar-menu">
-            <div class="navbar-start">
-              <a class="navbar-item" href="../index.html">
-                Home
-              </a>
-      
-              <a class="navbar-item" href="index.html">
-                Enter Stats
-              </a>
-  
-              <a class="navbar-item" href="../career_profile/index.html">
-                Career Profile
-              </a>
-            </div>
-      
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
@@ -512,13 +493,11 @@ export const renderNavbar = function () {
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-      </nav>`;
-        $("#navbar").append(html);
-      }
+          </div>`;
+        $(".navbar-end").replaceWith(html);
+        }
     });
-  };
+};
 
 export const loadIntoDOM = function () {
     renderNavbar();
