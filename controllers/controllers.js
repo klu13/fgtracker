@@ -61,6 +61,7 @@ exports.leaderboard = async (req, res, next) => {
         crownArray,
         goldArray
     })
+}
 exports.saveRound = async (req, res, next) => {
     let body = req.body
     let userId = body.userId
