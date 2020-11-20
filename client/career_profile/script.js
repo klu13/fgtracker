@@ -60,9 +60,69 @@ export const renderNavbar = function () {
   });
 };
 
-export async function loadIntoDOM() {
-  const $root = $("#root");
+export const renderOverview = (userData, roundsData) => {
+  let html = `
+    <h1 class="title is-1 has-text-weight-bold">Stats Overview</h1>
+    <div class="card" style="display: flex;padding: 25px; height: 150px; text-align:left; overflow:visible;">
+    <div style="margin: 0 auto">
+    <h2 class="subtitle">Shows</h2>
+    <h1 class="title is-1">${userData.gamesPlayed}</h1>
+    </div>
+    <div style="margin-left: 80px; margin: auto">
+    <h2 class="subtitle">Rounds</h2>
+    <h1 class="title is-1">${userData.roundsPlayed}</h1>
+    </div>
+    <div style="margin-left: 80px; margin: auto">
+    <h2 class="subtitle">Finals</h2>
+    <h1 class="title is-1">${userData.numFinals}</h1>
+    </div>
+    <div style="margin-left: 80px; margin: auto">
+    <h2 class="subtitle">Finals %</h2>
+    <h1 class="title is-1">${userData.gamesPlayed > 0 ? Math.round((userData.numFinals/ userData.gamesPlayed)*10000) / 100 : '0'}%</h1>
+    </div>
+    <div style="margin-left: 80px; margin: auto">
+    <h2 class="subtitle">Crowns</h2>
+    <h1 class="title is-1">${userData.crowns}</h1>
+    </div>
+    <div style="margin-left: 80px; margin: auto">
+    <h2 class="subtitle">Win %</h2>
+    <h1 class="title is-1">${userData.gamesPlayed > 0 ? Math.round((userData.crowns/ userData.gamesPlayed)*10000) / 100 : '0'}%</h1>
+    </div>
+    </div>
+    <h1 class="title is-1 has-text-weight-bold">Detailed Stats</h1>
+    <table class="table is-striped" style="text-align: center">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Played</th>
+        <th>Qualified</th>
+        <th>Qualified %</th>
+        <th>Gold</th>
+        <th>Silver</th>
+        <th>Bronze</th>
+      </tr>
+    </thead>
+    <tbody>
+  `
+  let roundKeys = Object.keys(roundsData)
+  for (let i = 0; i < roundKeys.length; i++) {
+    let stage = roundKeys[i]
+    html += `<tr>
+    <td>${stage}</td>
+    <td>${roundsData[stage].playedCount}</td>
+    <td>${roundsData[stage].qualifiedCount}</td>
+    <td>${roundsData[stage].playedCount > 0 ? Math.round((roundsData[stage].qualifiedCount/ roundsData[stage].playedCount)*10000) / 100 : '0'}%</td>
+    <td>${roundsData[stage].goldCount}</td>
+    <td>${roundsData[stage].silverCount}</td>
+    <td>${roundsData[stage].bronzeCount}</td>
+    </tr>`
+  }
+  html += `</tbody></table`
 
+  return html
+}
+
+export async function loadIntoDOM() {  
   renderNavbar();
   $(document).on('click', '#signOut', function (event) {
     firebase.auth().signOut().then(function() {
@@ -70,6 +130,27 @@ export async function loadIntoDOM() {
     }).catch(function(error) {
       // An error happened.
     });
+  })
+  firebase.auth().onAuthStateChanged(async function(user) {
+    if (user) {
+      const $root = $("#root");
+      let getUser = await axios({
+        method: 'get',
+        url: 'http://localhost:5000/api/getUser',
+        params: {
+          userId: user.uid
+        }
+      })
+      let userData = {}
+      let roundsData = {}
+      if (getUser.status == 200) {
+        userData = getUser.data.userData
+        roundsData = getUser.data.roundsData
+        $root.append(renderOverview(userData, roundsData))
+      }
+    } else {
+      window.location.replace('../login/index.html')
+    }
   })
 }
 

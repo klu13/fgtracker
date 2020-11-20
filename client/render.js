@@ -103,7 +103,7 @@ export const renderLeaderboard = async function () {
         <th >Rank</th>
         <th>Username</th>
         <th style="width: 200px">Crowns</th>
-        <th style="width: 200px">Win Percentage</th>
+        <th style="width: 200px">Win %</th>
       </tr>
     </thead>
     <tbody>`
@@ -135,7 +135,7 @@ export const renderLeaderboard = async function () {
         <th>Rank</th>
         <th>Username</th>
         <th style="width: 200px">Gold Medals</th>
-        <th style="width: 200px">Gold Percentage</th>
+        <th style="width: 200px">Gold %</th>
       </tr>
     </thead>
     <tbody>`
