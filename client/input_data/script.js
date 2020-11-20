@@ -217,7 +217,7 @@ export const handleSuccessMessage = function(message) {
                         <p style="font-family: Titan One;">Add Another Game</p>
                       </a>`;
 
-    newButtons += `<a class="button" style="background-color: #e75480;">
+    newButtons += `<a class="button" href="../career_profile/index.html" style="background-color: #e75480;">
                         <p style="font-family: Titan One;">View Your Stats</p>
                     </a>`
 
