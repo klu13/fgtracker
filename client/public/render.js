@@ -114,7 +114,7 @@ export const renderLeaderboard = async function () {
 
   let crownRequest = await axios({
     method: 'get',
-    url: 'https://207c3ba17000.ngrok.io/api/leaderboard'
+    url: 'https://boiling-spire-11914.herokuapp.com/api/leaderboard'
   })
   let crownArray = []
   let goldArray = []

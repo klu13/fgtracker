@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "proxy": "https://207c3ba17000.ngrok.io",
+  "proxy": "https://boiling-spire-11914.herokuapp.com",
   "license": "ISC",
   "dependencies": {
     "autocompleter": "^6.0.5",

@@ -148,7 +148,7 @@ export async function loadIntoDOM() {
   const $root = $("#root");
   let getUser = await axios({
     method: 'get',
-    url: 'https://207c3ba17000.ngrok.io/api/communityStats',
+    url: 'https://boiling-spire-11914.herokuapp.com/api/communityStats',
   })
   let communityData = {}
   let roundsData = {}

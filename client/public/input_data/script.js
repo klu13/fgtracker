@@ -230,7 +230,7 @@ export const handleSuccessMessage = function(message, gameId) {
 export const handleUndo = async function(gameId) {
     let deleteGame = await axios({
         method: 'delete',
-        url: 'https://207c3ba17000.ngrok.io/api/undo',
+        url: 'https://boiling-spire-11914.herokuapp.com/api/undo',
         data: {
             gameId
         }
@@ -318,7 +318,7 @@ export const handleSubmitClick = async function(event) {
         stageSelections.forEach(async (stage, index) => {
             let saveRound = await axios({
                 method: 'post',
-                url: 'https://207c3ba17000.ngrok.io/api/saveRound',
+                url: 'https://boiling-spire-11914.herokuapp.com/api/saveRound',
                 data: {
                     userId,
                     stage: stage,
@@ -358,7 +358,7 @@ export const handleSubmitClick = async function(event) {
 
         let updateUser = await axios({
             method: 'put',
-            url: 'https://207c3ba17000.ngrok.io/api/updateUser',
+            url: 'https://boiling-spire-11914.herokuapp.com/api/updateUser',
             data: {
                 crowns: numCrowns,
                 numFinals: numFinals,
