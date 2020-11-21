@@ -5,7 +5,7 @@ export const handleDropdownClick = (event) => {
         'Fall Ball', 'Fall Mountain', 'Fruit Chute', 'Gate Crash', 'Hex A Gone', 'Hit Parade', 'Hoarders', 
         'Hoopsie Daisy', 'Hoopsie Legends', 'Knight Fever', 'Jinxed', 'Jump Club', 'Jump Showdown', 
         'Perfect Match', 'Rock N Roll', 'Roll Out', 'Royal Fumble', 'See Saw', 'Slime Climb', 'Tail Tag', 
-        'Team Tail Tag', 'The Whirlygig', 'Tip Toe']
+        'Team Tail Tag', 'The Whirlygig', 'Tip Toe', 'Wall Guys']
     for (let i = 0; i < rounds; i++) {
         html += `
         <div class="column is-one-quarter" style="margin-top: 20px">
@@ -251,7 +251,7 @@ export const handleSubmitClick = async function(event) {
         'Fall Ball', 'Fall Mountain', 'Fruit Chute', 'Gate Crash', 'Hex A Gone', 'Hit Parade', 'Hoarders', 
         'Hoopsie Daisy', 'Hoopsie Legends', 'Knight Fever', 'Jinxed', 'Jump Club', 'Jump Showdown', 
         'Perfect Match', 'Rock N Roll', 'Roll Out', 'Royal Fumble', 'See Saw', 'Slime Climb', 'Tail Tag', 
-        'Team Tail Tag', 'The Whirlygig', 'Tip Toe'];
+        'Team Tail Tag', 'The Whirlygig', 'Tip Toe', 'Wall Guys'];
     const medalList = ['None', 'Bronze', 'Silver', 'Gold'];
     const finalsList = ['Fall Mountain', 'Hex A Gone', 'Jump Showdown', 'Royal Fumble'];
     let stageSelections = [];
