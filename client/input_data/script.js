@@ -462,7 +462,11 @@ export const renderNavbar = function () {
             <a class="navbar-item" href="../index.html">
               Home
             </a>
-  
+
+            <a class="navbar-item" href="../community_stats/index.html">
+                Community Stats
+            </a>        
+
             <a class="navbar-item" href="index.html">
               Enter Stats
             </a>
