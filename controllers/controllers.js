@@ -1,4 +1,4 @@
-const firebase = require("firebase/app")
+const firebase = require("firebase/app");
 require("firebase/firestore")
 require("firebase/auth")
 
@@ -76,13 +76,15 @@ exports.saveRound = async (req, res, next) => {
     let qualified = body.qualified
     let roundNum = body.roundNum
     let createdAt = new Date().toISOString()
+    let gameId = body.gameId
     const addRound = await db.collection('rounds').add({
         userId,
         stage,
         medal,
         qualified,
         roundNum,
-        createdAt
+        createdAt,
+        gameId
     })
     if (addRound) {
         console.log('Added document with ID: ' + addRound.id)
@@ -95,6 +97,28 @@ exports.saveRound = async (req, res, next) => {
             result: 'ERROR',
             message: 'Round not saved'
         })
+    }
+}
+
+exports.undo = async (req, res, next) => {
+    let body = req.body
+    let gameId = body.gameId.data
+    let deleteRounds = await db.collection('rounds').where('gameId', '==', gameId).get()
+    if (!deleteRounds.empty) {
+        deleteRounds.forEach(round => {
+            round.ref.delete()
+        })
+        console.log('Game Deleted with ID: '+ gameId)
+        res.status(204).json({
+            result: 'SUCCESS',
+            message: 'Game deleted',
+        })        
+    } else {
+        console.log(error);
+        res.status(500).json({
+            result: 'ERROR',
+            message: 'Game delete failed'
+        })        
     }
 }
 

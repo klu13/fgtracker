@@ -203,7 +203,7 @@ export const renderErrorMessage = function(message) {
             </div>`
 }
 
-export const handleSuccessMessage = function(message) {
+export const handleSuccessMessage = function(message, gameId) {
     let html = `<div id="error-message" style="background-color: #5dbb63; margin-bottom: 30px; padding: 15px">
                 <p>${message}</p>
             </div>`;
@@ -213,18 +213,38 @@ export const handleSuccessMessage = function(message) {
     $("#submit-button").remove();
     $("#dropdown-number").remove();
     $("#crown-dropdown").remove();
-    let newButtons = `<a class="button" style="background-color: #e75480; margin-right: 30px" href="./index.html">
+    let newButtons = `<a class="button" style="background-color: #e75480; margin-right: 15px" href="./index.html">
                         <p style="font-family: Titan One;">Add Another Game</p>
                       </a>`;
-
+    newButtons += `<button id="undo" class="button" style="background-color: #e75480; margin-right: 15px">
+                        <p style="font-family: Titan One;">Undo</p>
+                    </button>`
     newButtons += `<a class="button" href="../career_profile/index.html" style="background-color: #e75480;">
                         <p style="font-family: Titan One;">View Your Stats</p>
                     </a>`
 
-
     $("#game-stats-container").append(newButtons);
+    $(document).on('click', '#undo', gameId, handleUndo);
 }
 
+export const handleUndo = async function(gameId) {
+    let deleteGame = await axios({
+        method: 'delete',
+        url: 'http://localhost:5000/api/undo',
+        data: {
+            gameId
+        }
+    })
+    if (deleteGame.status == 204) {
+        let html = `<div id="error-message" style="background-color: #5dbb63; margin-bottom: 30px; padding: 15px">
+                <p>Success! Inputed game has been deleted.</p>
+            </div>`;
+        $("#error-message").replaceWith(html);
+        $('#undo').remove()
+    } else {
+        $("#error-message").replaceWith(renderErrorMessage("ERROR: Game undo failed."));
+    }
+}
 
 export const handleSubmitClick = async function(event) {
     const stageList = ['Big Fans', 'Block Party', 'Dizzy Heights', 'Door Dash', 'Egg Scramble', 'Egg Siege', 
@@ -294,7 +314,7 @@ export const handleSubmitClick = async function(event) {
         obj.stagesPlayed = stageSelections;
         obj.medalsEarned = medalSelections;
         obj.win = crownSelection;
-
+        let gameId =  '_' + Math.random().toString(36).substr(2, 9);
         stageSelections.forEach(async (stage, index) => {
             let saveRound = await axios({
                 method: 'post',
@@ -305,6 +325,7 @@ export const handleSubmitClick = async function(event) {
                     medal: index != stageSelections.length - 1 ? medalSelections[index] : (crownSelection == 'Yes' ? 'Gold' : 'None'),
                     roundNum: index + 1,
                     qualified: crownSelection == 'Yes' || index != stageSelections.length - 1,
+                    gameId
                 }
             });
         });
@@ -349,7 +370,7 @@ export const handleSubmitClick = async function(event) {
             }
         })
         if (updateUser.status == 201) {
-            handleSuccessMessage("Success! Your game has been recorded.");
+            handleSuccessMessage("Success! Your game has been recorded.", gameId);
         } else {
             $("#error-message").replaceWith(renderErrorMessage("ERROR: Your game was not recorded."));
         }
