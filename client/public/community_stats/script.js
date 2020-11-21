@@ -28,8 +28,8 @@ export const renderNavbar = function () {
       </div>
       <div class="navbar-end"></div>
     </nav>
-  `
-  $("#navbar").append(html)
+  `;
+  $("#navbar").append(html);
   let output = firebase.auth().onAuthStateChanged(async function (user) {
     if (user) {
       // User is signed in.
@@ -57,7 +57,7 @@ export const renderNavbar = function () {
           </div>
         </div>`;
       $(".navbar-end").replaceWith(html);
-  } else {
+    } else {
       // No user is signed in.
       let html = `
         <div class="navbar-end">
@@ -70,13 +70,13 @@ export const renderNavbar = function () {
           </div>
         </div>`;
       $(".navbar-end").replaceWith(html);
-      }
+    }
   });
 };
 
 export const renderOverview = (communityData, roundsData) => {
   let html = `
-    <h1 class="title is-1 has-text-weight-bold">Community Stats Overview</h1>
+    <h1 class="title is-1">Community Stats Overview</h1>
     <div class="card" style="display: flex;padding: 25px; height: 150px; text-align:left; overflow:visible;">
     <div style="margin: 0 auto">
     <h2 class="subtitle">Shows</h2>
@@ -92,7 +92,13 @@ export const renderOverview = (communityData, roundsData) => {
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Finals %</h2>
-    <h1 class="title is-1">${communityData.gamesPlayed > 0 ? Math.round((communityData.numFinals/ communityData.gamesPlayed)*10000) / 100 : '0'}%</h1>
+    <h1 class="title is-1">${
+      communityData.gamesPlayed > 0
+        ? Math.round(
+            (communityData.numFinals / communityData.gamesPlayed) * 10000
+          ) / 100
+        : "0"
+    }%</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Crowns</h2>
@@ -100,10 +106,16 @@ export const renderOverview = (communityData, roundsData) => {
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Win %</h2>
-    <h1 class="title is-1">${communityData.gamesPlayed > 0 ? Math.round((communityData.crowns/ communityData.gamesPlayed)*10000) / 100 : '0'}%</h1>
+    <h1 class="title is-1">${
+      communityData.gamesPlayed > 0
+        ? Math.round(
+            (communityData.crowns / communityData.gamesPlayed) * 10000
+          ) / 100
+        : "0"
+    }%</h1>
     </div>
     </div>
-    <h1 class="title is-1 has-text-weight-bold">Detailed Stats</h1>
+    <h1 class="title is-1">Detailed Stats</h1>
     <table class="table is-striped" style="text-align: center">
     <thead>
       <tr>
@@ -117,34 +129,45 @@ export const renderOverview = (communityData, roundsData) => {
       </tr>
     </thead>
     <tbody>
-  `
-  let roundKeys = Object.keys(roundsData)
+  `;
+  let roundKeys = Object.keys(roundsData);
   for (let i = 0; i < roundKeys.length; i++) {
-    let stage = roundKeys[i]
+    let stage = roundKeys[i];
     html += `<tr>
     <td>${stage}</td>
     <td>${roundsData[stage].playedCount}</td>
     <td>${roundsData[stage].qualifiedCount}</td>
-    <td>${roundsData[stage].playedCount > 0 ? Math.round((roundsData[stage].qualifiedCount/ roundsData[stage].playedCount)*10000) / 100 : '0'}%</td>
+    <td>${
+      roundsData[stage].playedCount > 0
+        ? Math.round(
+            (roundsData[stage].qualifiedCount / roundsData[stage].playedCount) *
+              10000
+          ) / 100
+        : "0"
+    }%</td>
     <td>${roundsData[stage].goldCount}</td>
     <td>${roundsData[stage].silverCount}</td>
     <td>${roundsData[stage].bronzeCount}</td>
-    </tr>`
+    </tr>`;
   }
-  html += `</tbody></table`
+  html += `</tbody></table`;
 
-  return html
-}
+  return html;
+};
 
-export async function loadIntoDOM() {  
+export async function loadIntoDOM() {
   renderNavbar();
-  $(document).on('click', '#signOut', function (event) {
-    firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-    }).catch(function(error) {
-      // An error happened.
-    });
-  })
+  $(document).on("click", "#signOut", function (event) {
+    firebase
+      .auth()
+      .signOut()
+      .then(function () {
+        // Sign-out successful.
+      })
+      .catch(function (error) {
+        // An error happened.
+      });
+  });
   const $root = $("#root");
   let getUser = await axios({
     method: 'get',
@@ -153,13 +176,12 @@ export async function loadIntoDOM() {
   let communityData = {}
   let roundsData = {}
   if (getUser.status == 200) {
-    communityData = getUser.data.communityData
-    roundsData = getUser.data.roundsData
-    $root.append(renderOverview(communityData, roundsData))
+    communityData = getUser.data.communityData;
+    roundsData = getUser.data.roundsData;
+    $root.append(renderOverview(communityData, roundsData));
   }
 }
 
 $(function () {
-    loadIntoDOM();
+  loadIntoDOM();
 });
-  
