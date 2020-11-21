@@ -26,7 +26,7 @@ let stages = ['Big Fans', 'Block Party', 'Dizzy Heights', 'Door Dash', 'Egg Scra
 'Fall Ball', 'Fall Mountain', 'Fruit Chute', 'Gate Crash', 'Hex A Gone', 'Hit Parade', 'Hoarders', 
 'Hoopsie Daisy', 'Hoopsie Legends', 'Knight Fever', 'Jinxed', 'Jump Club', 'Jump Showdown', 
 'Perfect Match', 'Rock N Roll', 'Roll Out', 'Royal Fumble', 'See Saw', 'Slime Climb', 'Tail Tag', 
-'Team Tail Tag', 'The Whirlygig', 'Tip Toe']
+'Team Tail Tag', 'The Whirlygig', 'Tip Toe', 'Wall Guys']
 
 exports.apiTest = async (req, res, next) => {
     let body = ''
