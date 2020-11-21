@@ -212,3 +212,85 @@ exports.getUser = async (req, res, next) => {
         }
     }
 }
+
+exports.communityStats = async (req, res, next) => {
+    let users = await db.collection('users').get();
+    if (!users.empty) {
+        let communityData = {}
+        let roundsData = {}
+        let userCount = 0
+        let crowns = 0
+        let gamesPlayed = 0
+        let numBronze = 0
+        let numFinals = 0
+        let numGold = 0
+        let numSilver = 0
+        let roundsPlayed = 0
+        let communityPromises = users.forEach(user => {
+            let userData = user.data()
+            userCount++
+            crowns += userData.crowns
+            gamesPlayed += userData.gamesPlayed
+            numBronze += userData.numBronze
+            numFinals += userData.numFinals
+            numGold += userData.numGold
+            numSilver += userData.numSilver
+            roundsPlayed += userData.roundsPlayed
+        })
+        let roundsPromises = stages.map(async stage => {
+            let rounds = await db.collection('rounds').where('stage', '==', stage).get()
+            if (!rounds.empty) {
+                let playedCount = 0
+                let qualifiedCount = 0
+                let goldCount = 0
+                let silverCount = 0
+                let bronzeCount = 0
+                rounds.forEach((round) => {
+                    thisData = round.data()
+                    playedCount++
+                    if (thisData.qualified) {
+                        qualifiedCount++
+                    }
+                    if (thisData.medal == 'Gold') {
+                        goldCount++
+                    } else if (thisData.medal == 'Silver') {
+                        silverCount++
+                    } else if (thisData.medal == 'Bronze') {
+                        bronzeCount++
+                    }
+                })
+                roundsData[stage] = {
+                    stage: stage,
+                    playedCount,
+                    qualifiedCount,
+                    goldCount,
+                    silverCount,
+                    bronzeCount
+                }
+            }
+        })
+        communityData = {
+            userCount,
+            crowns,
+            gamesPlayed,
+            numBronze,
+            numFinals,
+            numGold,
+            numSilver,
+            roundsPlayed
+        }
+        Promise.all(roundsPromises).then(() => {
+            console.log('Community stats found')
+            res.status(200).json({
+                communityData,
+                roundsData
+            })
+        })
+    } else {
+        console.log('Community stats not found');
+        res.status(404).json({
+            result: 'ERROR',
+            message: 'Community stats not found'
+        })
+    }
+}

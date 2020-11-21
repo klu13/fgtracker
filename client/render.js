@@ -13,6 +13,10 @@ export const renderNavbar = function () {
             Home
           </a>
 
+          <a class="navbar-item" href="community_stats/index.html">
+            Community Stats
+          </a>
+
           <a class="navbar-item" href="input_data/index.html">
             Enter Stats
           </a>

@@ -8,5 +8,6 @@ router.post('/saveRound', controllers.saveRound)
 router.put('/updateUser', controllers.updateUser)
 router.get('/getUser', controllers.getUser)
 router.delete('/undo', controllers.undo)
+router.get('/communityStats', controllers.communityStats)
 
 module.exports = router;

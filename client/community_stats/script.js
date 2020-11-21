@@ -13,7 +13,7 @@ export const renderNavbar = function () {
             Home
           </a>
 
-          <a class="navbar-item" href="../community_stats/index.html">
+          <a class="navbar-item" href="index.html">
             Community Stats
           </a>
 
@@ -21,7 +21,7 @@ export const renderNavbar = function () {
             Enter Stats
           </a>
 
-          <a class="navbar-item" href="index.html">
+          <a class="navbar-item" href="../career_profile/index.html">
             Career Profile
           </a>
         </div>
@@ -59,38 +59,48 @@ export const renderNavbar = function () {
       $(".navbar-end").replaceWith(html);
   } else {
       // No user is signed in.
-      window.location.replace('../login/index.html')
+      let html = `
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button" style="background-color: #e75480;" href="login/index.html">
+                <p>Login/Sign up</p>
+              </a>
+            </div>
+          </div>
+        </div>`;
+      $(".navbar-end").replaceWith(html);
       }
   });
 };
 
-export const renderOverview = (userData, roundsData) => {
+export const renderOverview = (communityData, roundsData) => {
   let html = `
-    <h1 class="title is-1 has-text-weight-bold">Stats Overview</h1>
+    <h1 class="title is-1 has-text-weight-bold">Community Stats Overview</h1>
     <div class="card" style="display: flex;padding: 25px; height: 150px; text-align:left; overflow:visible;">
     <div style="margin: 0 auto">
     <h2 class="subtitle">Shows</h2>
-    <h1 class="title is-1">${userData.gamesPlayed}</h1>
+    <h1 class="title is-1">${communityData.gamesPlayed}</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Rounds</h2>
-    <h1 class="title is-1">${userData.roundsPlayed}</h1>
+    <h1 class="title is-1">${communityData.roundsPlayed}</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Finals</h2>
-    <h1 class="title is-1">${userData.numFinals}</h1>
+    <h1 class="title is-1">${communityData.numFinals}</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Finals %</h2>
-    <h1 class="title is-1">${userData.gamesPlayed > 0 ? Math.round((userData.numFinals/ userData.gamesPlayed)*10000) / 100 : '0'}%</h1>
+    <h1 class="title is-1">${communityData.gamesPlayed > 0 ? Math.round((communityData.numFinals/ communityData.gamesPlayed)*10000) / 100 : '0'}%</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Crowns</h2>
-    <h1 class="title is-1">${userData.crowns}</h1>
+    <h1 class="title is-1">${communityData.crowns}</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Win %</h2>
-    <h1 class="title is-1">${userData.gamesPlayed > 0 ? Math.round((userData.crowns/ userData.gamesPlayed)*10000) / 100 : '0'}%</h1>
+    <h1 class="title is-1">${communityData.gamesPlayed > 0 ? Math.round((communityData.crowns/ communityData.gamesPlayed)*10000) / 100 : '0'}%</h1>
     </div>
     </div>
     <h1 class="title is-1 has-text-weight-bold">Detailed Stats</h1>
@@ -135,27 +145,18 @@ export async function loadIntoDOM() {
       // An error happened.
     });
   })
-  firebase.auth().onAuthStateChanged(async function(user) {
-    if (user) {
-      const $root = $("#root");
-      let getUser = await axios({
-        method: 'get',
-        url: 'http://localhost:5000/api/getUser',
-        params: {
-          userId: user.uid
-        }
-      })
-      let userData = {}
-      let roundsData = {}
-      if (getUser.status == 200) {
-        userData = getUser.data.userData
-        roundsData = getUser.data.roundsData
-        $root.append(renderOverview(userData, roundsData))
-      }
-    } else {
-      window.location.replace('../login/index.html')
-    }
+  const $root = $("#root");
+  let getUser = await axios({
+    method: 'get',
+    url: 'http://localhost:5000/api/communityStats',
   })
+  let communityData = {}
+  let roundsData = {}
+  if (getUser.status == 200) {
+    communityData = getUser.data.communityData
+    roundsData = getUser.data.roundsData
+    $root.append(renderOverview(communityData, roundsData))
+  }
 }
 
 $(function () {
