@@ -124,9 +124,9 @@ export async function loadIntoDOM() {
   const $root = $("#root");
   let response = await axios({
     method: 'get',
-    url: `https://cors-anywhere.herokuapp.com/https://fallguysapi.tk/api/achievements`
+    url: `http://localhost:5000/achievements`,
   })
-  $root.append(renderOverview(response.data))
+  $root.append(renderOverview(response.data.body))
 }
 
 $(function () {
