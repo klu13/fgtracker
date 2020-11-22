@@ -24,6 +24,10 @@ export const renderNavbar = function () {
           <a class="navbar-item" href="career_profile/index.html">
             Career Profile
           </a>
+
+          <a class="navbar-item" href="extras/index.html">
+            Extras
+          </a>
         </div>
       </div>
       <div class="navbar-end"></div>

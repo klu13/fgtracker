@@ -24,6 +24,10 @@ export const renderNavbar = function () {
           <a class="navbar-item" href="index.html">
             Career Profile
           </a>
+
+          <a class="navbar-item" href="../extras/index.html">
+            Extras
+          </a>
         </div>
       </div>
       <div class="navbar-end"></div>
@@ -121,7 +125,7 @@ export const renderOverview = (userData, roundsData) => {
     <td>${roundsData[stage].bronzeCount}</td>
     </tr>`
   }
-  html += `</tbody></table`
+  html += `</tbody></table>`
 
   return html
 }
