@@ -125,7 +125,7 @@ export const renderOverview = (userData, roundsData) => {
     <td>${roundsData[stage].bronzeCount}</td>
     </tr>`
   }
-  html += `</tbody></table`
+  html += `</tbody></table>`
 
   return html
 }
