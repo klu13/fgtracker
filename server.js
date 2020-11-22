@@ -23,8 +23,23 @@ app.use(cors());
 
 // Require Route
 const api = require('./routes/routes');
+const axios = require('axios')
 // Configure app to use route
 app.use('/api', api);
+
+app.get('/achievements', async (req, res) => {
+    let achievements = await axios({
+        method: 'get',
+        url: 'https://fallguysapi.tk/api/achievements'
+    })
+    if (achievements.status == 200) {
+        res.status(200).json({
+            body: achievements.data
+        })
+    } else {
+        res.status(500)
+    }
+})
 
 // Catch any bad requests
 app.get('*', (req, res) => {
