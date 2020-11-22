@@ -82,7 +82,7 @@ export const renderOverview = (data) => {
   let todayDate = new Date().toISOString().slice(0,10);
   let html = `
     <h1 class="title is-1 has-text-weight-bold">Today's Shop</h1>
-    <img src="https://fallguysapi.tk/api/shop/image?date=${todayDate}" alt="Achievement"></img>
+    <img src="https://fallguysapi.tk/api/shop/image?date=${todayDate}" style="border-radius: 7px" alt="Achievement"></img>
     <h1 class="title is-1 has-text-weight-bold">All Achievements</h1>
     <table class="table is-striped" style="text-align: center">
     <thead>
