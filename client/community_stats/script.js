@@ -24,6 +24,10 @@ export const renderNavbar = function () {
           <a class="navbar-item" href="../career_profile/index.html">
             Career Profile
           </a>
+
+          <a class="navbar-item" href="../extras/index.html">
+            Extras
+          </a>
         </div>
       </div>
       <div class="navbar-end"></div>
@@ -63,7 +67,7 @@ export const renderNavbar = function () {
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button" style="background-color: #e75480;" href="login/index.html">
+              <a class="button" style="background-color: #e75480;" href="../login/index.html">
                 <p>Login/Sign up</p>
               </a>
             </div>

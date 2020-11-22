@@ -21,19 +21,19 @@ export const renderNavbar = function () {
             Enter Stats
           </a>
 
-          <a class="navbar-item" href="index.html">
+          <a class="navbar-item" href="../career_profile/index.html">
             Career Profile
           </a>
 
-          <a class="navbar-item" href="../extras/index.html">
+          <a class="navbar-item" href="index.html">
             Extras
           </a>
         </div>
       </div>
       <div class="navbar-end"></div>
     </nav>
-  `
-  $("#navbar").append(html)
+  `;
+  $("#navbar").append(html);
   let output = firebase.auth().onAuthStateChanged(async function (user) {
     if (user) {
       // User is signed in.
@@ -61,43 +61,65 @@ export const renderNavbar = function () {
           </div>
         </div>`;
       $(".navbar-end").replaceWith(html);
-  } else {
+    } else {
       // No user is signed in.
-      window.location.replace('../login/index.html')
-      }
+      let html = `
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button" style="background-color: #e75480;" href="../login/index.html">
+                <p>Login/Sign up</p>
+              </a>
+            </div>
+          </div>
+        </div>`;
+      $(".navbar-end").replaceWith(html);
+    }
   });
 };
 
-export const renderOverview = (userData, roundsData) => {
+export const renderOverview = (communityData, roundsData) => {
   let html = `
-    <h1 class="title is-1 has-text-weight-bold">Stats Overview</h1>
+    <h1 class="title is-1">Community Stats Overview</h1>
     <div class="card" style="display: flex;padding: 25px; height: 150px; text-align:left; overflow:visible;">
     <div style="margin: 0 auto">
     <h2 class="subtitle">Shows</h2>
-    <h1 class="title is-1">${userData.gamesPlayed}</h1>
+    <h1 class="title is-1">${communityData.gamesPlayed}</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Rounds</h2>
-    <h1 class="title is-1">${userData.roundsPlayed}</h1>
+    <h1 class="title is-1">${communityData.roundsPlayed}</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Finals</h2>
-    <h1 class="title is-1">${userData.numFinals}</h1>
+    <h1 class="title is-1">${communityData.numFinals}</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Finals %</h2>
-    <h1 class="title is-1">${userData.gamesPlayed > 0 ? Math.round((userData.numFinals/ userData.gamesPlayed)*10000) / 100 : '0'}%</h1>
+    <h1 class="title is-1">${
+      communityData.gamesPlayed > 0
+        ? Math.round(
+            (communityData.numFinals / communityData.gamesPlayed) * 10000
+          ) / 100
+        : "0"
+    }%</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Crowns</h2>
-    <h1 class="title is-1">${userData.crowns}</h1>
+    <h1 class="title is-1">${communityData.crowns}</h1>
     </div>
     <div style="margin-left: 80px; margin: auto">
     <h2 class="subtitle">Win %</h2>
-    <h1 class="title is-1">${userData.gamesPlayed > 0 ? Math.round((userData.crowns/ userData.gamesPlayed)*10000) / 100 : '0'}%</h1>
+    <h1 class="title is-1">${
+      communityData.gamesPlayed > 0
+        ? Math.round(
+            (communityData.crowns / communityData.gamesPlayed) * 10000
+          ) / 100
+        : "0"
+    }%</h1>
     </div>
     </div>
-    <h1 class="title is-1 has-text-weight-bold">Detailed Stats</h1>
+    <h1 class="title is-1">Detailed Stats</h1>
     <table class="table is-striped" style="text-align: center">
     <thead>
       <tr>
@@ -111,58 +133,48 @@ export const renderOverview = (userData, roundsData) => {
       </tr>
     </thead>
     <tbody>
-  `
-  let roundKeys = Object.keys(roundsData)
+  `;
+  let roundKeys = Object.keys(roundsData);
   for (let i = 0; i < roundKeys.length; i++) {
-    let stage = roundKeys[i]
+    let stage = roundKeys[i];
     html += `<tr>
     <td>${stage}</td>
     <td>${roundsData[stage].playedCount}</td>
     <td>${roundsData[stage].qualifiedCount}</td>
-    <td>${roundsData[stage].playedCount > 0 ? Math.round((roundsData[stage].qualifiedCount/ roundsData[stage].playedCount)*10000) / 100 : '0'}%</td>
+    <td>${
+      roundsData[stage].playedCount > 0
+        ? Math.round(
+            (roundsData[stage].qualifiedCount / roundsData[stage].playedCount) *
+              10000
+          ) / 100
+        : "0"
+    }%</td>
     <td>${roundsData[stage].goldCount}</td>
     <td>${roundsData[stage].silverCount}</td>
     <td>${roundsData[stage].bronzeCount}</td>
-    </tr>`
+    </tr>`;
   }
-  html += `</tbody></table`
+  html += `</tbody></table`;
 
-  return html
-}
+  return html;
+};
 
-export async function loadIntoDOM() {  
+export async function loadIntoDOM() {
   renderNavbar();
-  $(document).on('click', '#signOut', function (event) {
-    firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-    }).catch(function(error) {
-      // An error happened.
-    });
-  })
-  firebase.auth().onAuthStateChanged(async function(user) {
-    if (user) {
-      const $root = $("#root");
-      let getUser = await axios({
-        method: 'get',
-        url: 'http://localhost:5000/api/getUser',
-        params: {
-          userId: user.uid
-        }
+  $(document).on("click", "#signOut", function (event) {
+    firebase
+      .auth()
+      .signOut()
+      .then(function () {
+        // Sign-out successful.
       })
-      let userData = {}
-      let roundsData = {}
-      if (getUser.status == 200) {
-        userData = getUser.data.userData
-        roundsData = getUser.data.roundsData
-        $root.append(renderOverview(userData, roundsData))
-      }
-    } else {
-      window.location.replace('../login/index.html')
-    }
-  })
+      .catch(function (error) {
+        // An error happened.
+      });
+  });
+  const $root = $("#root");
 }
 
 $(function () {
-    loadIntoDOM();
+  loadIntoDOM();
 });
-  
