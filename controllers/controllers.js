@@ -113,13 +113,15 @@ exports.undo = async (req, res, next) => {
         let last = deleteRounds.docs[deleteRounds.docs.length - 1].data()
         let userId = last.userId;
         let promises = finalsList.map(final => {
-            let data = last
-            if (data.stage == final) {
-                numFinals = -1;
-                if (data.medal == 'Gold') {
-                    numCrowns = -1
+            deleteRounds.forEach(round => {
+                let data = round.data()
+                if (data.stage == final) {
+                    numFinals = -1;
+                    if (data.medal == 'Gold') {
+                        numCrowns = -1
+                    }
                 }
-            }
+            })
         })
         
         Promise.all(promises).then(async () => { 
