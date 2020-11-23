@@ -82,7 +82,7 @@ export const renderBody = async function () {
   let html = `
     <section class="section">
       <div class="container">
-        <div class="columns" style="height: 83vh">
+        <div class="columns" style="height: 1100px">
           <div class="column">
             ${await renderLeaderboard()}
           </div>
@@ -177,7 +177,7 @@ export const renderAbout = function () {
 };
 
 export const renderTwitterFeed = function () {
-  let html = `<a class="twitter-timeline" data-height="83vh" href="https://twitter.com/FallGuysGame?ref_src=twsrc%5Etfw"></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  let html = `<a class="twitter-timeline" data-height="1000px" href="https://twitter.com/FallGuysGame?ref_src=twsrc%5Etfw"></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`;
   return html;
 };
 
