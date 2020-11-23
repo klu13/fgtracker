@@ -113,19 +113,21 @@ exports.undo = async (req, res, next) => {
         let last = deleteRounds.docs[deleteRounds.docs.length - 1].data()
         let userId = last.userId;
         let promises = finalsList.map(final => {
-            let data = last
-            if (data.stage == final) {
-                numFinals = -1;
-                if (data.medal == 'Gold') {
-                    numCrowns = -1
+            deleteRounds.forEach(round => {
+                let data = round.data()
+                if (data.stage == final) {
+                    numFinals = -1;
+                    if (data.medal == 'Gold') {
+                        numCrowns = -1
+                    }
                 }
-            }
-        })
-        deleteRounds.forEach((round, index) => {
-            round.ref.delete()
+            })
         })
         
         Promise.all(promises).then(async () => { 
+            deleteRounds.forEach((round, index) => {            
+                round.ref.delete()
+            })
             let user_ref = db.collection('users').doc(userId);
             await user_ref.update({
                 "roundsPlayed": firebase.firestore.FieldValue.increment(numRounds),
