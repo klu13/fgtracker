@@ -112,7 +112,7 @@ exports.undo = async (req, res, next) => {
         let numFinals = 0;  
         let last = deleteRounds.docs[deleteRounds.docs.length - 1].data()
         let userId = last.userId;
-        finalsList.forEach(final => {
+        let promises = finalsList.map(final => {
             let data = last
             if (data.stage == final) {
                 numFinals = -1;
@@ -125,25 +125,27 @@ exports.undo = async (req, res, next) => {
             round.ref.delete()
         })
         
-        let user_ref = db.collection('users').doc(userId);
-        await user_ref.update({
-            "roundsPlayed": firebase.firestore.FieldValue.increment(numRounds),
-            "crowns": firebase.firestore.FieldValue.increment(numCrowns),
-            "gamesPlayed": firebase.firestore.FieldValue.increment(-1),
-            "numFinals": firebase.firestore.FieldValue.increment(numFinals),
-        }).then(() => {
-            console.log('Game Deleted with ID: '+ gameId)
-            res.status(204).json({
-                result: 'SUCCESS',
-                message: 'Game deleted',
-            })               
-        }).catch((error) => {
-            console.log(error);
-            res.status(500).json({
-                result: 'ERROR',
-                message: 'Game delete failed'
-            })             
-        });
+        Promise.all(promises).then(async () => { 
+            let user_ref = db.collection('users').doc(userId);
+            await user_ref.update({
+                "roundsPlayed": firebase.firestore.FieldValue.increment(numRounds),
+                "crowns": firebase.firestore.FieldValue.increment(numCrowns),
+                "gamesPlayed": firebase.firestore.FieldValue.increment(-1),
+                "numFinals": firebase.firestore.FieldValue.increment(numFinals),
+            }).then(() => {
+                console.log('Game Deleted with ID: '+ gameId)
+                res.status(204).json({
+                    result: 'SUCCESS',
+                    message: 'Game deleted',
+                })               
+            }).catch((error) => {
+                console.log(error);
+                res.status(500).json({
+                    result: 'ERROR',
+                    message: 'Game delete failed'
+                })             
+            });
+        })
     } else {
         console.log(error);
         res.status(500).json({
