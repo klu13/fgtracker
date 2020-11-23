@@ -28,6 +28,8 @@ let stages = ['Big Fans', 'Block Party', 'Dizzy Heights', 'Door Dash', 'Egg Scra
 'Perfect Match', 'Rock N Roll', 'Roll Out', 'Royal Fumble', 'See Saw', 'Slime Climb', 'Tail Tag', 
 'Team Tail Tag', 'The Whirlygig', 'Tip Toe', 'Wall Guys']
 
+const finalsList = ['Fall Mountain', 'Hex A Gone', 'Jump Showdown', 'Royal Fumble'];
+
 exports.apiTest = async (req, res, next) => {
     let body = ''
     const snapshot = await db.collection('test').get();
@@ -105,14 +107,43 @@ exports.undo = async (req, res, next) => {
     let gameId = body.gameId.data
     let deleteRounds = await db.collection('rounds').where('gameId', '==', gameId).get()
     if (!deleteRounds.empty) {
-        deleteRounds.forEach(round => {
+        let numRounds = deleteRounds.docs.length * -1
+        let numCrowns = 0;
+        let numFinals = 0;  
+        let last = deleteRounds.docs[deleteRounds.docs.length - 1].data()
+        let userId = last.userId;
+        finalsList.forEach(final => {
+            let data = last
+            if (data.stage == final) {
+                numFinals = -1;
+                if (data.medal == 'Gold') {
+                    numCrowns = -1
+                }
+            }
+        })
+        deleteRounds.forEach((round, index) => {            
             round.ref.delete()
         })
-        console.log('Game Deleted with ID: '+ gameId)
-        res.status(204).json({
-            result: 'SUCCESS',
-            message: 'Game deleted',
-        })        
+        
+        let user_ref = db.collection('users').doc(userId);
+        await user_ref.update({
+            "roundsPlayed": firebase.firestore.FieldValue.increment(numRounds),
+            "crowns": firebase.firestore.FieldValue.increment(numCrowns),
+            "gamesPlayed": firebase.firestore.FieldValue.increment(-1),
+            "numFinals": firebase.firestore.FieldValue.increment(numFinals),
+        }).then(() => {
+            console.log('Game Deleted with ID: '+ gameId)
+            res.status(204).json({
+                result: 'SUCCESS',
+                message: 'Game deleted',
+            })               
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                result: 'ERROR',
+                message: 'Game delete failed'
+            })             
+        });    
     } else {
         console.log(error);
         res.status(500).json({
