@@ -121,11 +121,11 @@ exports.undo = async (req, res, next) => {
                 }
             }
         })
-        deleteRounds.forEach((round, index) => {            
-            round.ref.delete()
-        })
         
         Promise.all(promises).then(async () => { 
+            deleteRounds.forEach((round, index) => {            
+                round.ref.delete()
+            })
             let user_ref = db.collection('users').doc(userId);
             await user_ref.update({
                 "roundsPlayed": firebase.firestore.FieldValue.increment(numRounds),
